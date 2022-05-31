@@ -1,41 +1,41 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
-import { RootState } from '../../../application/store/configureStore';
-import { useSelector } from 'react-redux';
-import { MarkEmailReadOutlined } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
-import { AppBarOptionsPopover } from './AppBarOptionsPopover';
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
+import { RootState } from "../../../application/store/configureStore";
+import { useSelector } from "react-redux";
+import { MarkEmailReadOutlined } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
+import { AppBarOptionsPopover } from "./AppBarOptionsPopover";
 
 const pages = [
   {
-    name: 'Ficha Técnica',
-    path: '/workscale',
+    name: "Ficha Técnica",
+    path: "/workscale",
   },
   {
-    name: 'Transportadora',
-    path: '/company',
+    name: "Transportadora",
+    path: "/company",
   },
   {
-    name: 'Veículo',
-    path: '/vehicle',
+    name: "Veículo",
+    path: "/vehicle",
   },
   {
-    name: 'Motorista',
-    path: '/driver',
+    name: "Motorista",
+    path: "/driver",
   },
   {
-    name: 'Plano de Viagem',
-    path: '/itinerary',
+    name: "Plano de Viagem",
+    path: "/itinerary",
   },
   {
-    name: 'Vinculo',
-    path: '/vinculo',
+    name: "Vinculo",
+    path: "/vinculo",
   },
 ];
 
@@ -56,15 +56,27 @@ export const ResponsiveAppBar = () => {
   // };
 
   return (
-    <AppBar position='static' sx={{ marginBottom: '15px' }}>
-      <Container maxWidth='xl'>
+    <AppBar position="static" sx={{ marginBottom: "15px" }}>
+      <Container maxWidth="xl">
         <Toolbar disableGutters>
+          {isAdmin && (
+            <Box>
+              <Button
+                component={Link}
+                to={"/adminDashboard"}
+                // onClick={() => handleRedirect(page)}
+                sx={{ mx: 0.8, my: 2, color: "white", display: "block" }}
+              >
+                Dashboard
+              </Button>
+            </Box>
+          )}
           <Box
             sx={{
               flexGrow: 1,
-              display: 'flex',
-              justifyContent: 'center',
-              verticalAlign: 'center',
+              display: "flex",
+              justifyContent: "center",
+              verticalAlign: "center",
             }}
           >
             {/* <Typography
@@ -82,7 +94,7 @@ export const ResponsiveAppBar = () => {
                 to={`${page.path}`}
                 key={page.name}
                 // onClick={() => handleRedirect(page)}
-                sx={{ mx: 0.8, my: 2, color: 'white', display: 'block' }}
+                sx={{ mx: 0.8, my: 2, color: "white", display: "block" }}
               >
                 {page.name}
               </Button>
