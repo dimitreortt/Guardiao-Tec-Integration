@@ -1,15 +1,25 @@
 import { Divider, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useEffect } from "react";
 import { ResponsiveAppBar } from "../../components/Common/AppBar";
 import { CompanyFilter } from "../../components/Filter/CompanyFilter";
 import BasicTabs from "./BasicTabs";
 import { DataBoxTitle } from "./DataBoxTitle";
 import { DataBox } from "./DataBox";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../application/store/configureStore";
+import { fetchUsers } from "../../../infra/services/fetchUsers";
+import { UsersList } from "./UsersList";
 
 type Props = {};
 
 export const AdminDashboard: FunctionComponent<Props> = ({}) => {
+  const { isAdmin } = useSelector((state: RootState) => state.auth);
+
+  useEffect(() => {
+    if (isAdmin) fetchUsers();
+  }, [isAdmin]);
+
   return (
     <div>
       <ResponsiveAppBar />
@@ -36,7 +46,9 @@ export const AdminDashboard: FunctionComponent<Props> = ({}) => {
               </DataBox>
             </Grid>
             <Grid item xs={6}>
-              <DataBox title="Usuários"></DataBox>
+              <DataBox title="Usuários">
+                <UsersList />
+              </DataBox>
             </Grid>
           </Grid>
         </Box>

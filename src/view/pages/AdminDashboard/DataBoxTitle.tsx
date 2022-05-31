@@ -14,6 +14,7 @@ export const DataBoxTitle: FunctionComponent<Props> = ({ title }) => {
         m: 1,
         color: "#666e",
       }}
+      textAlign="center"
     >
       {title}
     </Typography>

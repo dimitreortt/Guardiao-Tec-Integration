@@ -25,7 +25,7 @@ export const TMSReport: FunctionComponent<Props> = ({ data }) => {
             // color: "white",
           }}
         >
-          <Typography sx={{ fontSize: 20 }}>
+          <Typography component={"span"} sx={{ fontSize: 20 }}>
             Erros de TMS: {data.error}
           </Typography>
         </Box>
@@ -41,7 +41,7 @@ export const TMSReport: FunctionComponent<Props> = ({ data }) => {
             // color: "white",
           }}
         >
-          <Typography sx={{ fontSize: 20 }}>
+          <Typography component={"span"} sx={{ fontSize: 20 }}>
             TMS com sucesso: {data.success}
           </Typography>
         </Box>
