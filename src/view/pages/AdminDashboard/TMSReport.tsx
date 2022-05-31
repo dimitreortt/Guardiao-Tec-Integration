@@ -12,7 +12,7 @@ type Props = {
 export const TMSReport: FunctionComponent<Props> = ({ data }) => {
   return (
     <div>
-      <Box sx={{ height: 300 }}>
+      <Box sx={{}}>
         <Box
           sx={{
             backgroundColor: "rgba(255, 0, 0, 0.5)",
