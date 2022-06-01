@@ -10,6 +10,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../application/store/configureStore";
 import { fetchUsers } from "../../../infra/services/fetchUsers";
 import { UsersList } from "./UsersList";
+import { getCurrentMonth } from "./getCurrentMonth";
+import { DriversFilteredByCNH } from "./DriversFilteredByCNH";
 
 type Props = {};
 
@@ -37,7 +39,7 @@ export const AdminDashboard: FunctionComponent<Props> = ({}) => {
           }}
         >
           <Grid container spacing={1}>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <DataBox title="Relatórios">
                 <Box sx={{ position: "relative", top: -80, mb: 8, left: -10 }}>
                   <CompanyFilter />
@@ -45,9 +47,17 @@ export const AdminDashboard: FunctionComponent<Props> = ({}) => {
                 <BasicTabs />
               </DataBox>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <DataBox title="Usuários">
                 <UsersList />
+              </DataBox>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <DataBox title="CNHs">
+                <Typography textAlign="center" gutterBottom>
+                  CNHs com vencimento em <b>{getCurrentMonth()}</b>
+                </Typography>
+                <DriversFilteredByCNH />
               </DataBox>
             </Grid>
           </Grid>

@@ -1,23 +1,24 @@
-import React, { FunctionComponent } from 'react';
-import { Box, Button } from '@mui/material';
-import { ResponsiveAppBar } from '../../components/Common/AppBar';
-import { Link } from 'react-router-dom';
-import { CustomTable } from '../../components/Table/CustomTable';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Driver } from '../../../domain/entities/Driver';
-import { DriverRepositoryDatabase } from '../../../infra/repository/DriverRepositoryDatabase';
-import moment from 'moment';
-import { RootState } from '../../../application/store/configureStore';
-import { CompanyFilter } from '../../components/Filter/CompanyFilter';
-import { canRegister } from '../../../application/service/canRegister';
-import { TargetFilter } from '../Common/TargetFilter';
-import { RowCommand } from '../../components/Table/TableRowOptions';
-import { EditDriverForm } from '../../components/Forms/Driver/EditDriverForm';
-import { fetchDrivers } from '../../../infra/services/fetchDrivers';
-import { DeleteConfirmDialog } from '../Common/DeleteConfirmDialog';
-import { selectCurrentRelatedCompanyId } from '../../../infra/services/selectCurrentRelatedCompanyId';
+import React, { FunctionComponent } from "react";
+import { Box, Button } from "@mui/material";
+import { ResponsiveAppBar } from "../../components/Common/AppBar";
+import { Link } from "react-router-dom";
+import { CustomTable } from "../../components/Table/CustomTable";
+import { useEffect } from "react";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { Driver } from "../../../domain/entities/Driver";
+import { DriverRepositoryDatabase } from "../../../infra/repository/DriverRepositoryDatabase";
+import moment from "moment";
+import { RootState } from "../../../application/store/configureStore";
+import { CompanyFilter } from "../../components/Filter/CompanyFilter";
+import { canRegister } from "../../../application/service/canRegister";
+import { TargetFilter } from "../Common/TargetFilter";
+import { RowCommand } from "../../components/Table/TableRowOptions";
+import { EditDriverForm } from "../../components/Forms/Driver/EditDriverForm";
+import { fetchDrivers } from "../../../infra/services/fetchDrivers";
+import { DeleteConfirmDialog } from "../Common/DeleteConfirmDialog";
+import { selectCurrentRelatedCompanyId } from "../../../infra/services/selectCurrentRelatedCompanyId";
+import { CustomDriversTable } from "./CustomDriversTable";
 
 type Props = {};
 
@@ -36,34 +37,12 @@ export const DriverPage: FunctionComponent<Props> = ({}) => {
     fetchDrivers(setDrivers);
   }, [adminSelectedCompanyId, userCompanyId]);
 
-  const makeTableRows = () => {
-    let rows: string[][] = [];
-    for (const driver of filteredDrivers) {
-      rows.push([
-        driver.values.nome,
-        driver.values.contato,
-        driver.values.cnh,
-        moment(driver.values.vencimento).format('MM/YYYY'),
-      ]);
-    }
-    return rows;
-  };
-
-  const driversTableHead = [
-    'Nome',
-    'Contato',
-    'CNH',
-    'Vencimento CNH',
-    '', // necessário para a simetria da tabela
-  ];
-  const driversTableRows = makeTableRows();
-
   const onRowCommand = (command: RowCommand, row: string[]) => {
     const driver = drivers.find((d) => d.values.cnh === row[2]);
     if (!driver) return;
     setTargetCommandDriver(driver);
-    if (command === 'edit') setInEdit(true);
-    if (command === 'delete') setInDelete(true);
+    if (command === "edit") setInEdit(true);
+    if (command === "delete") setInDelete(true);
   };
 
   const onEditClose = () => {
@@ -81,7 +60,7 @@ export const DriverPage: FunctionComponent<Props> = ({}) => {
     let companyId = await selectCurrentRelatedCompanyId();
     if (!companyId)
       throw new Error(
-        'Id de transportadora não identificado! Impossível deletar motorista!'
+        "Id de transportadora não identificado! Impossível deletar motorista!"
       );
     await repo.deleteDriver(companyId, driverId);
   };
@@ -94,27 +73,26 @@ export const DriverPage: FunctionComponent<Props> = ({}) => {
         <TargetFilter
           targets={drivers}
           setFilteredTargets={setFilteredDrivers}
-          filterField='nome'
-          filterName='Motorista'
+          filterField="nome"
+          filterName="Motorista"
         />
         <Box
-          sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', mb: 2 }}
+          sx={{ flexGrow: 1, display: "flex", justifyContent: "center", mb: 2 }}
         >
           <Button
             component={Link}
             to={`/driver/register`}
-            variant='contained'
-            color='primary'
+            variant="contained"
+            color="primary"
             disabled={!canRegister()}
           >
             Cadastrar
           </Button>
         </Box>
       </div>
-      <CustomTable
-        tableHead={driversTableHead}
-        tableRows={driversTableRows}
+      <CustomDriversTable
         onRowCommand={onRowCommand}
+        drivers={filteredDrivers}
       />
       {inEdit && (
         <EditDriverForm
@@ -129,7 +107,7 @@ export const DriverPage: FunctionComponent<Props> = ({}) => {
           open={inDelete}
           onClose={onDeleteClose}
           targetId={targetCommandDriver!.values.Id!}
-          targetName={'Motorista'}
+          targetName={"Motorista"}
           onDelete={onDelete}
         />
       )}
