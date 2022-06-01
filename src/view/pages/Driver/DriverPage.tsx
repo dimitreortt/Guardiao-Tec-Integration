@@ -92,6 +92,7 @@ export const DriverPage: FunctionComponent<Props> = ({}) => {
       </div>
       <CustomDriversTable
         onRowCommand={onRowCommand}
+        noRowOptions={false}
         drivers={filteredDrivers}
       />
       {inEdit && (

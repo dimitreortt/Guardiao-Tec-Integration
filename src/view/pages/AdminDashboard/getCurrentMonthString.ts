@@ -13,7 +13,7 @@ const map = {
   11: "Dezembro",
 };
 
-export const getCurrentMonth = () => {
+export const getCurrentMonthString = () => {
   const date = new Date();
   const month = date.getMonth();
   const year = date.getFullYear();

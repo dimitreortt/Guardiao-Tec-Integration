@@ -1,15 +1,15 @@
-import React, { FunctionComponent } from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import { CustomTableRow } from './CustomTableRow';
-import Paper from '@mui/material/Paper';
+import React, { FunctionComponent } from "react";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import { CustomTableRow } from "./CustomTableRow";
+import Paper from "@mui/material/Paper";
 // import { uid } from 'react-uid';
-import uuid from 'react-uuid';
-import { RowCommand } from './TableRowOptions';
+import uuid from "react-uuid";
+import { RowCommand } from "./TableRowOptions";
 
 function createData(
   name: string,
@@ -22,31 +22,36 @@ function createData(
 }
 
 const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
+  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
+  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
+  createData("Eclair", 262, 16.0, 24, 6.0),
+  createData("Cupcake", 305, 3.7, 67, 4.3),
+  createData("Gingerbread", 356, 16.0, 49, 3.9),
 ];
 
 type Props = {
   tableHead: string[];
   tableRows: string[][];
   onRowCommand: (command: RowCommand, row: string[]) => void;
+  noRowOptions?: boolean;
 };
 
 export const CustomTable: FunctionComponent<Props> = ({
   tableHead,
   tableRows,
   onRowCommand,
+  noRowOptions,
 }) => {
   return (
-    <TableContainer component={Paper} sx={{ height: '100%' }}>
-      <Table sx={{ minWidth: 650, height: '100%' }} aria-label='simple table'>
+    <TableContainer component={Paper} sx={{ maxHeight: "100%" }}>
+      <Table
+        sx={{ minWidth: 650, maxHeight: "100%" }}
+        aria-label="simple table"
+      >
         <TableHead>
           <TableRow>
             {tableHead.map((column, index) => (
-              <TableCell align='center' key={uuid()}>
+              <TableCell align="center" key={uuid()}>
                 <b>{column}</b>
               </TableCell>
             ))}
@@ -58,7 +63,12 @@ export const CustomTable: FunctionComponent<Props> = ({
         </TableHead>
         <TableBody>
           {tableRows.map((row, index) => (
-            <CustomTableRow row={row} key={index} onRowCommand={onRowCommand} />
+            <CustomTableRow
+              row={row}
+              key={index}
+              onRowCommand={onRowCommand}
+              noRowOptions={noRowOptions}
+            />
             // <TableRow
             //   key={index}
             //   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

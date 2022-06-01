@@ -1,13 +1,14 @@
-import { DriverRepositoryDatabase } from '../repository/DriverRepositoryDatabase';
-import { store } from './../../application/store/configureStore';
+import { DriverRepositoryDatabase } from "../repository/DriverRepositoryDatabase";
+import { store } from "./../../application/store/configureStore";
 
-export const fetchDrivers = async (setDrivers: any) => {
+export const fetchDrivers = async (setDrivers: any, forceGetAll?: boolean) => {
   const { user, isAdmin } = store.getState().auth;
   const { adminSelectedCompanyId, userCompanyId } = store.getState().companies;
   const repo = new DriverRepositoryDatabase();
 
   if (isAdmin && adminSelectedCompanyId) {
-    const shouldGetAll = adminSelectedCompanyId === 'Todas';
+    let shouldGetAll = adminSelectedCompanyId === "Todas";
+    if (forceGetAll) shouldGetAll = true;
 
     if (shouldGetAll) {
       const drivers = await repo.adminGetAllDrivers();
