@@ -59,13 +59,13 @@ export default function BasicTabs() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <TMSReport data={{ error: 5, success: 6 }} />
+        <TMSReport data={{ error: 5, success: 6 }} periodFilter={"hoje"} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <TMSReport data={{ error: 5, success: 6 }} />
+        <TMSReport data={{ error: 5, success: 6 }} periodFilter={"semana"} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <TMSReport data={{ error: 5, success: 6 }} />
+        <TMSReport data={{ error: 5, success: 6 }} periodFilter={"geral"} />
       </TabPanel>
     </Box>
   );

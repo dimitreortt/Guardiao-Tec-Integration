@@ -14,7 +14,7 @@ export const DataBox: FunctionComponent<Props> = ({ children, title }) => {
         borderColor: "#aaa",
         p: 1,
         borderRadius: "5px",
-        height: 500,
+        minHeight: 500,
       }}
     >
       <DataBoxTitle title={title} />

@@ -16,6 +16,7 @@ import { Vehicle } from "../../../domain/entities/Vehicle";
 import { fetchCompanyName } from "../../../infra/services/fetchCompanyName";
 import { fetchVehicles } from "../../../infra/services/fetchVehicles";
 import { checkIsCNHDueDate } from "../../pages/AdminDashboard/checkIsCNHDueDate";
+import { CustomTableWithoutOptions } from "../Table/CustomTableWithoutOptions";
 
 type Props = { vehicles?: Vehicle[] };
 
@@ -29,20 +30,6 @@ const getTranspName = async (transpId: string) => {
   return transpName;
 };
 
-const Row = ({ row }: { row: string[] }) => {
-  return (
-    <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-      {row.map((column, index) => {
-        return (
-          <TableCell align="center" key={uuid()}>
-            {column}
-          </TableCell>
-        );
-      })}
-    </TableRow>
-  );
-};
-
 export const DashboardLicensesTable: FunctionComponent<Props> = ({}) => {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [filteredVehicles, setFilteredVehicles] = useState<Vehicle[]>([]);
@@ -54,8 +41,6 @@ export const DashboardLicensesTable: FunctionComponent<Props> = ({}) => {
     (state: RootState) => state.companies
   );
 
-  console.log(tableRows);
-
   useEffect(() => {
     fetchVehicles(setVehicles, true);
   }, [adminSelectedCompanyId, userCompanyId]);
@@ -66,7 +51,6 @@ export const DashboardLicensesTable: FunctionComponent<Props> = ({}) => {
       checkDate.setFullYear(checkDate.getFullYear() + 1);
 
       const response = checkIsCNHDueDate(checkDate);
-      console.log(response);
       return response;
     });
     setFilteredVehicles(filtered);
@@ -98,26 +82,6 @@ export const DashboardLicensesTable: FunctionComponent<Props> = ({}) => {
   };
 
   return (
-    <TableContainer component={Paper} sx={{ maxHeight: "100%" }}>
-      <Table
-        sx={{ minWidth: 650, maxHeight: "100%" }}
-        aria-label="simple table"
-      >
-        <TableHead>
-          <TableRow>
-            {tableHead.map((column, index) => (
-              <TableCell align="center" key={uuid()} sx={{ paddingX: 0 }}>
-                <b>{column}</b>
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {tableRows.map((row, index) => (
-            <Row row={row} key={index} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <CustomTableWithoutOptions tableHead={tableHead} tableRows={tableRows} />
   );
 };

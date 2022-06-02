@@ -4,7 +4,6 @@ import React, { FunctionComponent, useEffect } from "react";
 import { ResponsiveAppBar } from "../../components/Common/AppBar";
 import { CompanyFilter } from "../../components/Filter/CompanyFilter";
 import BasicTabs from "./BasicTabs";
-import { DataBoxTitle } from "./DataBoxTitle";
 import { DataBox } from "./DataBox";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../application/store/configureStore";
@@ -40,7 +39,7 @@ export const AdminDashboard: FunctionComponent<Props> = ({}) => {
           }}
         >
           <Grid container spacing={1}>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={12}>
               <DataBox title="Relatórios">
                 <Box sx={{ position: "relative", top: -80, mb: 8, left: -10 }}>
                   <CompanyFilter />

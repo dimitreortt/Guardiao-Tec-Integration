@@ -15,7 +15,6 @@ export const CustomTableRow: FunctionComponent<Props> = ({
   onRowCommand,
   noRowOptions,
 }) => {
-  console.log(noRowOptions);
   return (
     <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
       {row.map((column, index) => {
