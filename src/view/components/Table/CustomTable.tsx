@@ -51,7 +51,7 @@ export const CustomTable: FunctionComponent<Props> = ({
         <TableHead>
           <TableRow>
             {tableHead.map((column, index) => (
-              <TableCell align="center" key={uuid()}>
+              <TableCell align="center" key={uuid()} sx={{ paddingX: 0 }}>
                 <b>{column}</b>
               </TableCell>
             ))}

@@ -6,9 +6,14 @@ export const fetchDrivers = async (setDrivers: any, forceGetAll?: boolean) => {
   const { adminSelectedCompanyId, userCompanyId } = store.getState().companies;
   const repo = new DriverRepositoryDatabase();
 
+  if (forceGetAll) {
+    const drivers = await repo.adminGetAllDrivers();
+    setDrivers(drivers);
+    return;
+  }
+
   if (isAdmin && adminSelectedCompanyId) {
     let shouldGetAll = adminSelectedCompanyId === "Todas";
-    if (forceGetAll) shouldGetAll = true;
 
     if (shouldGetAll) {
       const drivers = await repo.adminGetAllDrivers();

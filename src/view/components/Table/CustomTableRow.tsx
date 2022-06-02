@@ -20,7 +20,7 @@ export const CustomTableRow: FunctionComponent<Props> = ({
     <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
       {row.map((column, index) => {
         return (
-          <TableCell align="center" key={uuid()}>
+          <TableCell align="center" key={uuid()} sx={{ paddingX: 0 }}>
             {column}
           </TableCell>
         );

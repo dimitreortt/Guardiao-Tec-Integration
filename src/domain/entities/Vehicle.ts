@@ -2,14 +2,16 @@ type VehicleInput = {
   Marca: string;
   Modelo: string;
   Cor: string;
-  'Ano Fabricação': Date;
-  'Ano Modelo': Date;
+  "Ano Fabricação": Date;
+  "Ano Modelo": Date;
   Placa: string;
-  'Capacidade(m3)': string;
+  "Capacidade(m3)": string;
   Chassi: string;
   Renavam: string;
   Categoria: string;
   Id?: string;
+  "Último Licenciamento": Date;
+  transpId: string;
 };
 
 export class Vehicle {

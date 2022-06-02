@@ -12,6 +12,7 @@ import { fetchUsers } from "../../../infra/services/fetchUsers";
 import { UsersList } from "./UsersList";
 import { getCurrentMonthString } from "./getCurrentMonthString";
 import { DriversFilteredByCNH } from "./DriversFilteredByCNH";
+import { DashboardLicensesTable } from "../../components/DashboardLicensesTable/DashboardLicensesTable";
 
 type Props = {};
 
@@ -58,6 +59,16 @@ export const AdminDashboard: FunctionComponent<Props> = ({}) => {
                   CNHs com vencimento em <b>{getCurrentMonthString()}</b>
                 </Typography>
                 <DriversFilteredByCNH />
+              </DataBox>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <DataBox title="Licenciamentos">
+                <Typography textAlign="center" gutterBottom>
+                  Veículos com vencimento do licenciamento em{" "}
+                  <b>{getCurrentMonthString()}</b>
+                </Typography>
+                {/* <DriversFilteredByCNH /> */}
+                <DashboardLicensesTable />
               </DataBox>
             </Grid>
           </Grid>

@@ -1,22 +1,23 @@
-import React, { FunctionComponent } from 'react';
-import { Box, Button } from '@mui/material';
-import { ResponsiveAppBar } from '../../components/Common/AppBar';
-import { Link } from 'react-router-dom';
-import { CustomTable } from '../../components/Table/CustomTable';
-import { Vehicle } from '../../../domain/entities/Vehicle';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { VehicleRepositoryDatabase } from '../../../infra/repository/VehicleRepositoryDatabase';
-import { RootState } from '../../../application/store/configureStore';
-import { useSelector } from 'react-redux';
-import { CompanyFilter } from '../../components/Filter/CompanyFilter';
-import { canRegister } from '../../../application/service/canRegister';
-import { TargetFilter } from '../Common/TargetFilter';
-import { RowCommand } from '../../components/Table/TableRowOptions';
-import { EditVehicleForm } from '../../components/Forms/Vehicle/EditVehicleForm';
-import { fetchVehicles } from '../../../infra/services/fetchVehicles';
-import { selectCurrentRelatedCompanyId } from '../../../infra/services/selectCurrentRelatedCompanyId';
-import { DeleteConfirmDialog } from '../Common/DeleteConfirmDialog';
+import React, { FunctionComponent } from "react";
+import { Box, Button } from "@mui/material";
+import { ResponsiveAppBar } from "../../components/Common/AppBar";
+import { Link } from "react-router-dom";
+import { CustomTable } from "../../components/Table/CustomTable";
+import { Vehicle } from "../../../domain/entities/Vehicle";
+import { useEffect } from "react";
+import { useState } from "react";
+import { VehicleRepositoryDatabase } from "../../../infra/repository/VehicleRepositoryDatabase";
+import { RootState } from "../../../application/store/configureStore";
+import { useSelector } from "react-redux";
+import { CompanyFilter } from "../../components/Filter/CompanyFilter";
+import { canRegister } from "../../../application/service/canRegister";
+import { TargetFilter } from "../Common/TargetFilter";
+import { RowCommand } from "../../components/Table/TableRowOptions";
+import { EditVehicleForm } from "../../components/Forms/Vehicle/EditVehicleForm";
+import { fetchVehicles } from "../../../infra/services/fetchVehicles";
+import { selectCurrentRelatedCompanyId } from "../../../infra/services/selectCurrentRelatedCompanyId";
+import { DeleteConfirmDialog } from "../Common/DeleteConfirmDialog";
+import moment from "moment";
 
 type Props = {};
 
@@ -44,12 +45,13 @@ export const VehiclePage: FunctionComponent<Props> = ({}) => {
         vehicle.values.Marca,
         vehicle.values.Modelo,
         vehicle.values.Cor,
-        vehicle.values['Ano Fabricação'].getFullYear().toString(),
-        vehicle.values['Ano Modelo'].getFullYear().toString(),
+        vehicle.values["Ano Fabricação"].getFullYear().toString(),
+        vehicle.values["Ano Modelo"].getFullYear().toString(),
         vehicle.values.Placa,
         vehicle.values.Chassi,
         vehicle.values.Renavam,
-        vehicle.values['Capacidade(m3)'].toString(),
+        moment(vehicle.values["Último Licenciamento"]).format("MM/YYYY"),
+        vehicle.values["Capacidade(m3)"].toString(),
         vehicle.values.Categoria,
       ]);
     }
@@ -57,17 +59,18 @@ export const VehiclePage: FunctionComponent<Props> = ({}) => {
   };
 
   const vehiclesTableHead = [
-    'Marca',
-    'Modelo',
-    'Cor',
-    'Ano Fabricação',
-    'Ano Modelo',
-    'Placa',
-    'Chassi',
-    'Renavam',
-    'Capacidade(m3)',
-    'Categoria',
-    '',
+    "Marca",
+    "Modelo",
+    "Cor",
+    "Ano Fabricação",
+    "Ano Modelo",
+    "Placa",
+    "Chassi",
+    "Renavam",
+    "Último Licenciamento",
+    "Capacidade(m3)",
+    "Categoria",
+    "",
   ];
   const vehiclesTableRows = makeTableRows();
 
@@ -75,8 +78,8 @@ export const VehiclePage: FunctionComponent<Props> = ({}) => {
     const vehicle = vehicles.find((v) => v.values.Placa === row[5]);
     if (!vehicle) return;
     setTargetCommandVehicle(vehicle);
-    if (command === 'edit') setInEdit(true);
-    if (command === 'delete') setInDelete(true);
+    if (command === "edit") setInEdit(true);
+    if (command === "delete") setInDelete(true);
   };
 
   const onEditClose = () => {
@@ -94,7 +97,7 @@ export const VehiclePage: FunctionComponent<Props> = ({}) => {
     let companyId = await selectCurrentRelatedCompanyId();
     if (!companyId)
       throw new Error(
-        'Id de transportadora não identificado! Impossível deletar veículo!'
+        "Id de transportadora não identificado! Impossível deletar veículo!"
       );
     await repo.deleteVehicle(companyId, vehicleId);
   };
@@ -106,17 +109,17 @@ export const VehiclePage: FunctionComponent<Props> = ({}) => {
       <TargetFilter
         targets={vehicles}
         setFilteredTargets={setFilteredVehicles}
-        filterField='Placa'
-        filterName='Placa'
+        filterField="Placa"
+        filterName="Placa"
       />
       <Box
-        sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', mb: 2 }}
+        sx={{ flexGrow: 1, display: "flex", justifyContent: "center", mb: 2 }}
       >
         <Button
           component={Link}
           to={`/vehicle/register`}
-          variant='contained'
-          color='primary'
+          variant="contained"
+          color="primary"
           disabled={!canRegister()}
         >
           Cadastrar
@@ -140,7 +143,7 @@ export const VehiclePage: FunctionComponent<Props> = ({}) => {
           open={inDelete}
           onClose={onDeleteClose}
           targetId={targetCommandVehicle!.values.Id!}
-          targetName={'Veículo'}
+          targetName={"Veículo"}
           onDelete={onDelete}
         />
       )}

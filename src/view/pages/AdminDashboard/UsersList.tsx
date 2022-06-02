@@ -45,6 +45,7 @@ export const UsersList: FunctionComponent<Props> = ({}) => {
         <TableBody>
           {tableRows.map((row, index) => (
             <TableRow
+              key={index}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell align="center" key={uuid()}>

@@ -1,4 +1,4 @@
-import { Vehicle } from './../../domain/entities/Vehicle';
+import { Vehicle } from "./../../domain/entities/Vehicle";
 import {
   addDoc,
   Firestore,
@@ -12,9 +12,9 @@ import {
   deleteDoc,
   doc,
   setDoc,
-} from 'firebase/firestore';
-import { db } from './../../firebase/firebase';
-import { VehicleRepository } from '../../domain/repository/VehicleRepository';
+} from "firebase/firestore";
+import { db } from "./../../firebase/firebase";
+import { VehicleRepository } from "../../domain/repository/VehicleRepository";
 
 export class VehicleRepositoryDatabase {
   db: Firestore;
@@ -25,10 +25,10 @@ export class VehicleRepositoryDatabase {
 
   async addVehicle(vehicle: Vehicle, companyId: string): Promise<void> {
     const colRef = collection(this.db, `companies/${companyId}/vehicles`);
-    const q = query(colRef, where('Placa', '==', vehicle.values.Placa));
+    const q = query(colRef, where("Placa", "==", vehicle.values.Placa));
     const querySnapshot = await getDocs(q);
     if (querySnapshot.docs.length > 0)
-      throw new Error('Veículo com esta placa já foi cadastrado!');
+      throw new Error("Veículo com esta placa já foi cadastrado!");
     addDoc(colRef, vehicle.values);
   }
 
@@ -38,7 +38,7 @@ export class VehicleRepositoryDatabase {
   }
 
   async getVehicles(): Promise<Vehicle[]> {
-    const colRef = collection(this.db, 'vehicles');
+    const colRef = collection(this.db, "vehicles");
     // const q = query(colRef);
     return this.getVehiclesFromQuery(colRef);
   }
@@ -48,8 +48,10 @@ export class VehicleRepositoryDatabase {
     let vehicles: Vehicle[] = [];
     querySnapshot.forEach((doc) => {
       const data: any = doc.data();
-      data['Ano Fabricação'] = data['Ano Fabricação'].toDate();
-      data['Ano Modelo'] = data['Ano Modelo'].toDate();
+      data["Ano Fabricação"] = data["Ano Fabricação"].toDate();
+      data["Ano Modelo"] = data["Ano Modelo"].toDate();
+      data["Último Licenciamento"] = data["Último Licenciamento"].toDate();
+      data.transpId = doc.ref.parent.parent?.id;
       data.Id = doc.id;
       vehicles.push(new Vehicle(data));
     });
@@ -62,7 +64,7 @@ export class VehicleRepositoryDatabase {
   }
 
   async adminGetAllVehicles() {
-    const q = collectionGroup(this.db, 'vehicles');
+    const q = collectionGroup(this.db, "vehicles");
     return this.getVehiclesFromQuery(q);
   }
 
