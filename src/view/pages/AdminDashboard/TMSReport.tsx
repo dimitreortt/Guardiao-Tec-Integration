@@ -26,8 +26,6 @@ export const TMSReport: FunctionComponent<Props> = ({ data, periodFilter }) => {
     (state: RootState) => state.companies.adminSelectedCompanyId
   );
 
-  console.log(filtered);
-
   useEffect(() => {
     fetchReports(setReports);
   }, []);

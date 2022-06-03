@@ -1,4 +1,4 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
 import { User, UserValues } from "../../domain/entities/User";
 import { db } from "../../firebase/firebase";
 import { serverUrl } from "./serverUrl";
@@ -34,5 +34,15 @@ export class UserRepositoryDatabase {
       users.push(data);
     });
     return users;
+  }
+
+  async blockUser(user: UserValues) {
+    const docRef = doc(db, `users/${user.Id}`);
+    updateDoc(docRef, { blocked: true });
+  }
+
+  async unblockUser(user: UserValues) {
+    const docRef = doc(db, `users/${user.Id}`);
+    updateDoc(docRef, { blocked: false });
   }
 }

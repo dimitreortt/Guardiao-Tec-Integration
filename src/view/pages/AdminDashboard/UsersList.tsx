@@ -15,6 +15,9 @@ import { useSelector } from "react-redux";
 import uuid from "react-uuid";
 import { RootState } from "../../../application/store/configureStore";
 import BlockIcon from "@mui/icons-material/Block";
+import LockOpenIcon from "@mui/icons-material/LockOpen";
+import { UserRepositoryDatabase } from "../../../infra/repository/UserRepositoryDatabase";
+import { dispatchUserBlockedStatus } from "../../../application/service/dispatchUserBlockedStatus";
 
 type Props = {};
 
@@ -29,6 +32,19 @@ export const UsersList: FunctionComponent<Props> = ({}) => {
       return [u.email, u.accessType, u.blocked];
     });
   }
+
+  const handleLock = (row: (string | boolean)[]) => {
+    const email = row[0];
+    const user = users?.find((u) => u.email === email);
+    if (!user) return;
+
+    const repo = new UserRepositoryDatabase();
+    const isBlocked = row[2];
+    if (isBlocked) repo.unblockUser(user);
+    else repo.blockUser(user);
+    console.log(isBlocked);
+    dispatchUserBlockedStatus(user, !isBlocked as boolean);
+  };
 
   return (
     <TableContainer component={Box} sx={{}}>
@@ -60,10 +76,10 @@ export const UsersList: FunctionComponent<Props> = ({}) => {
               <TableCell align="center" key={uuid()}>
                 <Tooltip title="Bloquear">
                   <IconButton
-                    onClick={() => {}}
+                    onClick={() => handleLock(row)}
                     sx={{ p: 0, mx: 0, my: 0, display: "block" }}
                   >
-                    <BlockIcon />
+                    {row[2] ? <LockOpenIcon /> : <BlockIcon />}
                   </IconButton>
                 </Tooltip>
               </TableCell>
