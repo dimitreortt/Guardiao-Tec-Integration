@@ -29,7 +29,11 @@ export const TMSErrorsReport: FunctionComponent<Props> = ({ reports }) => {
 
   const makeTableRows = () => {
     const rows: string[][] = [];
-    const errorsReports = reports.filter((f) => f.status === "error");
+    let errorsReports = reports.filter((f) => f.status === "error");
+    errorsReports = errorsReports.sort(
+      //@ts-ignore
+      (r1, r2) => new Date(r2.createdAt) - new Date(r1.createdAt)
+    );
     for (const report of errorsReports) {
       //   const transpName = await getTranspName(vehicle.transpId);
       const row = [
