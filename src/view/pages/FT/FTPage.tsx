@@ -18,6 +18,7 @@ import { EditFTForm } from "../../components/Forms/FT/EditFTForm";
 import { DeleteConfirmDialog } from "../Common/DeleteConfirmDialog";
 import { selectCurrentRelatedCompanyId } from "../../../infra/services/selectCurrentRelatedCompanyId";
 import { BaseStyledPage } from "../Common/BaseStyledPage";
+import { RegisterButton } from "../Common/RegisterButton";
 
 type Props = {};
 
@@ -105,25 +106,7 @@ export const FTPage: FunctionComponent<Props> = ({}) => {
         filterField="Nº da FT"
         filterName="Nº da FT"
       />
-      <Box
-        sx={{
-          flexGrow: 1,
-          display: "flex",
-          justifyContent: "center",
-          mb: 2,
-        }}
-      >
-        <Button
-          component={Link}
-          to={`/workscale/register`}
-          variant="contained"
-          color="primary"
-          disabled={!canRegister()}
-        >
-          Cadastrar
-        </Button>
-      </Box>
-
+      <RegisterButton to={`/workscale/register`} />
       <CustomTable
         tableHead={ftsTableHead}
         tableRows={ftsTableRows}

@@ -25,7 +25,7 @@ export const BaseStyledPage: FunctionComponent<Props> = ({ children }) => {
 
       <Box
         sx={{
-          backgroundColor: "rgba(255, 255, 255, 0.5)",
+          //   backgroundColor: "rgba(255, 255, 255, 0.5)",
           minHeight: "100vh",
           //   minHeight: "100%",
           marginTop: -2,
