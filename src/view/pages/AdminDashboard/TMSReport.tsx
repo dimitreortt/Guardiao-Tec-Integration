@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../application/store/configureStore";
 import { ReportValues } from "../../../domain/entities/Report";
 import { fetchReports } from "../../../infra/services/fetchReports";
+import { listenReports } from "../../../infra/services/listenReports";
 import { selectCurrentRelatedCompanyId } from "../../../infra/services/selectCurrentRelatedCompanyId";
 import { TMSErrorsReport } from "./TMSErrorsReport";
 import { TMSSuccessReport } from "./TMSSuccessReport";
@@ -27,7 +28,8 @@ export const TMSReport: FunctionComponent<Props> = ({ data, periodFilter }) => {
   );
 
   useEffect(() => {
-    fetchReports(setReports);
+    // fetchReports(setReports);
+    listenReports(setReports);
   }, []);
 
   const filterByDay = (reports: ReportValues[]) =>

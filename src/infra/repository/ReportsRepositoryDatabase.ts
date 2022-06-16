@@ -9,6 +9,7 @@ import {
   doc,
   deleteDoc,
   getDoc,
+  onSnapshot,
 } from "firebase/firestore";
 import { Report, ReportValues } from "../../domain/entities/Report";
 import { db } from "../../firebase/firebase";
@@ -30,5 +31,18 @@ export class ReportsRepositoryDatabase {
       reports.push(data);
     });
     return reports;
+  }
+
+  listenReports(setReports: any) {
+    const q = collection(this.db, "tmsReports");
+    onSnapshot(q, (querySnapshot) => {
+      const reports: ReportValues[] = [];
+      querySnapshot.forEach((doc) => {
+        const data: any = doc.data();
+        data.createdAt = data.createdAt.toDate();
+        reports.push(data);
+      });
+      setReports(reports);
+    });
   }
 }
