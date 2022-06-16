@@ -6,8 +6,8 @@ import {
   Select,
   SelectChangeEvent,
   TextField,
-} from '@mui/material';
-import React, { FunctionComponent, useEffect, useState } from 'react';
+} from "@mui/material";
+import React, { FunctionComponent, useEffect, useState } from "react";
 // import { Driver } from '../../../domain/entities/Driver';
 
 type Props = {
@@ -23,7 +23,7 @@ export const TargetFilter: FunctionComponent<Props> = ({
   filterField,
   filterName,
 }) => {
-  const [filterText, setFilterText] = useState('');
+  const [filterText, setFilterText] = useState("");
 
   useEffect(() => {
     // if (!filterText) setFilteredTargets(targets);
@@ -40,10 +40,16 @@ export const TargetFilter: FunctionComponent<Props> = ({
   };
 
   return (
-    <Box sx={{ position: 'absolute', left: 220, top: 80 }}>
+    <Box
+      sx={{
+        position: "absolute",
+        left: 220,
+        top: 80,
+      }}
+    >
       <Box sx={{ mb: 1.3 }}>
         <TextField
-          id='driverfilter'
+          id="driverfilter"
           label={filterName}
           value={filterText}
           onChange={handleChange}
