@@ -3,7 +3,7 @@ import React, { FunctionComponent } from "react";
 import { ReportValues } from "../../../domain/entities/Report";
 import { fetchCompanyName } from "../../../infra/services/fetchCompanyName";
 import { CustomTableWithoutOptions } from "../../components/Table/CustomTableWithoutOptions";
-
+moment.locale("pt-br");
 type Props = {
   reports: ReportValues[];
 };
@@ -33,7 +33,7 @@ export const TMSErrorsReport: FunctionComponent<Props> = ({ reports }) => {
     for (const report of errorsReports) {
       //   const transpName = await getTranspName(vehicle.transpId);
       const row = [
-        moment(report.createdAt).format("DD/MM/YYYY hh:mm"),
+        moment(report.createdAt).format("DD/MM/yyyy hh:mm:ss"),
         report.status,
         report.transportadora,
         report.message,

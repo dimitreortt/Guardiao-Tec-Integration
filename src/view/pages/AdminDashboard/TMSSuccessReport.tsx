@@ -3,6 +3,7 @@ import React, { FunctionComponent } from "react";
 import { ReportValues } from "../../../domain/entities/Report";
 import { fetchCompanyName } from "../../../infra/services/fetchCompanyName";
 import { CustomTableWithoutOptions } from "../../components/Table/CustomTableWithoutOptions";
+moment.locale("pt-br");
 
 type Props = {
   reports: ReportValues[];
@@ -29,11 +30,17 @@ export const TMSSuccessReport: FunctionComponent<Props> = ({ reports }) => {
 
   const makeTableRows = () => {
     const rows: string[][] = [];
-    const successReports = reports.filter((f) => f.status === "success");
+    let successReports = reports.filter((f) => f.status === "success");
+    successReports = successReports.sort(
+      //@ts-ignore
+      (sr1, sr2) => new Date(sr2.createdAt) - new Date(sr1.createdAt)
+    );
     for (const report of successReports) {
       //   const transpName = await getTranspName(vehicle.transpId);
       const row = [
-        moment(report.createdAt).format("DD/MM/YYYY hh:mm"),
+        report.createdAt.toLocaleString("pt-BR", {
+          timeZone: "America/Sao_Paulo",
+        }),
         report.status,
         report.transportadora,
         report.message,

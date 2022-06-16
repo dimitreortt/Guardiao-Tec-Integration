@@ -1,7 +1,6 @@
 import {
   Box,
   IconButton,
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -37,12 +36,10 @@ export const UsersList: FunctionComponent<Props> = ({}) => {
     const email = row[0];
     const user = users?.find((u) => u.email === email);
     if (!user) return;
-
     const repo = new UserRepositoryDatabase();
     const isBlocked = row[2];
     if (isBlocked) repo.unblockUser(user);
     else repo.blockUser(user);
-    console.log(isBlocked);
     dispatchUserBlockedStatus(user, !isBlocked as boolean);
   };
 
