@@ -1,19 +1,21 @@
-import React, { FunctionComponent } from 'react';
-import { Box, Button } from '@mui/material';
-import { ResponsiveAppBar } from '../../components/Common/AppBar';
-import { Link } from 'react-router-dom';
-import { CustomTable } from '../../components/Table/CustomTable';
-import { useState } from 'react';
-import { Company } from '../../../domain/entities/Company';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { CompanyRepositoryDatabase } from '../../../infra/repository/CompanyRepositoryDatabase';
-import { RootState } from '../../../application/store/configureStore';
-import { TargetFilter } from '../Common/TargetFilter';
-import { RowCommand } from '../../components/Table/TableRowOptions';
-import { EditCompanyForm } from '../../components/Forms/Company/EditCompanyForm';
-import { DeleteConfirmDialog } from '../Common/DeleteConfirmDialog';
-import { fetchCompanies } from '../../../infra/services/fetchCompanies';
+import React, { FunctionComponent } from "react";
+import { Box, Button } from "@mui/material";
+import { ResponsiveAppBar } from "../../components/Common/AppBar";
+import { Link } from "react-router-dom";
+import { CustomTable } from "../../components/Table/CustomTable";
+import { useState } from "react";
+import { Company } from "../../../domain/entities/Company";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { CompanyRepositoryDatabase } from "../../../infra/repository/CompanyRepositoryDatabase";
+import { RootState } from "../../../application/store/configureStore";
+import { TargetFilter } from "../Common/TargetFilter";
+import { RowCommand } from "../../components/Table/TableRowOptions";
+import { EditCompanyForm } from "../../components/Forms/Company/EditCompanyForm";
+import { DeleteConfirmDialog } from "../Common/DeleteConfirmDialog";
+import { fetchCompanies } from "../../../infra/services/fetchCompanies";
+import { RegisterButton } from "../Common/RegisterButton";
+import { BaseStyledPage } from "../Common/BaseStyledPage";
 
 type Props = {};
 
@@ -48,23 +50,23 @@ export const CompanyPage: FunctionComponent<Props> = ({}) => {
     let rows: string[][] = [];
     for (const company of filteredCompanies) {
       rows.push([
-        company.values['Transportadora'],
-        company.values['CNPJ'],
-        company.values['Contato'],
-        company.values['Email'],
-        company.values['Responsável'],
+        company.values["Transportadora"],
+        company.values["CNPJ"],
+        company.values["Contato"],
+        company.values["Email"],
+        company.values["Responsável"],
       ]);
     }
     return rows;
   };
 
   const companiesTableHead = [
-    'Transportadora',
-    'CNPJ',
-    'Contato',
-    'Email',
-    'Responsável',
-    '',
+    "Transportadora",
+    "CNPJ",
+    "Contato",
+    "Email",
+    "Responsável",
+    "",
   ];
   const companiesTableRows = makeTableRows();
 
@@ -72,8 +74,8 @@ export const CompanyPage: FunctionComponent<Props> = ({}) => {
     const company = companies.find((c) => c.values.CNPJ === row[1]);
     if (!company) return;
     setTargetCommandCompany(company);
-    if (command === 'edit') setInEdit(true);
-    if (command === 'delete') setInDelete(true);
+    if (command === "edit") setInEdit(true);
+    if (command === "delete") setInDelete(true);
   };
 
   const onEditClose = () => {
@@ -92,30 +94,16 @@ export const CompanyPage: FunctionComponent<Props> = ({}) => {
   };
 
   return (
-    <div>
-      <ResponsiveAppBar />
+    <BaseStyledPage>
       {isAdmin && (
         <TargetFilter
           targets={companies}
           setFilteredTargets={setFilteredCompanies}
-          filterField='Transportadora'
-          filterName='Filtrar por nome'
+          filterField="Transportadora"
+          filterName="Filtrar por nome"
         />
       )}
-      <Box
-        sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', mb: 2 }}
-      >
-        {isAdmin && (
-          <Button
-            component={Link}
-            to={`/company/register`}
-            variant='contained'
-            color='primary'
-          >
-            Cadastrar
-          </Button>
-        )}
-      </Box>
+      <RegisterButton to={`/company/register`} />
       <CustomTable
         tableHead={companiesTableHead}
         tableRows={companiesTableRows}
@@ -134,11 +122,10 @@ export const CompanyPage: FunctionComponent<Props> = ({}) => {
           open={inDelete}
           onClose={onDeleteClose}
           targetId={targetCommandCompany!.values.Id!}
-          targetName={'Transportadora'}
+          targetName={"Transportadora"}
           onDelete={onDelete}
         />
       )}
-      {/*// é uma dialog}*/}
-    </div>
+    </BaseStyledPage>
   );
 };

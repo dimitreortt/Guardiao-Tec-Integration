@@ -14,7 +14,7 @@ export const RegisterButton: FunctionComponent<Props> = ({ to }) => {
         display: "flex",
         justifyContent: "center",
         // mb: 2,
-        mt: -2,
+        mt: -1.7,
         pt: 2,
         pb: 2,
         backgroundColor: "white",

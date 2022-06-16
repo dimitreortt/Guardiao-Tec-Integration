@@ -18,6 +18,8 @@ import { fetchVehicles } from "../../../infra/services/fetchVehicles";
 import { selectCurrentRelatedCompanyId } from "../../../infra/services/selectCurrentRelatedCompanyId";
 import { DeleteConfirmDialog } from "../Common/DeleteConfirmDialog";
 import moment from "moment";
+import { RegisterButton } from "../Common/RegisterButton";
+import { BaseStyledPage } from "../Common/BaseStyledPage";
 
 type Props = {};
 
@@ -103,8 +105,7 @@ export const VehiclePage: FunctionComponent<Props> = ({}) => {
   };
 
   return (
-    <div>
-      <ResponsiveAppBar />
+    <BaseStyledPage>
       {isAdmin && <CompanyFilter />}
       <TargetFilter
         targets={vehicles}
@@ -112,19 +113,7 @@ export const VehiclePage: FunctionComponent<Props> = ({}) => {
         filterField="Placa"
         filterName="Placa"
       />
-      <Box
-        sx={{ flexGrow: 1, display: "flex", justifyContent: "center", mb: 2 }}
-      >
-        <Button
-          component={Link}
-          to={`/vehicle/register`}
-          variant="contained"
-          color="primary"
-          disabled={!canRegister()}
-        >
-          Cadastrar
-        </Button>
-      </Box>
+      <RegisterButton to={`/vehicle/register`} />
       <CustomTable
         tableHead={vehiclesTableHead}
         tableRows={vehiclesTableRows}
@@ -147,6 +136,6 @@ export const VehiclePage: FunctionComponent<Props> = ({}) => {
           onDelete={onDelete}
         />
       )}
-    </div>
+    </BaseStyledPage>
   );
 };

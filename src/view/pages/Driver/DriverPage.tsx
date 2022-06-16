@@ -19,6 +19,8 @@ import { fetchDrivers } from "../../../infra/services/fetchDrivers";
 import { DeleteConfirmDialog } from "../Common/DeleteConfirmDialog";
 import { selectCurrentRelatedCompanyId } from "../../../infra/services/selectCurrentRelatedCompanyId";
 import { CustomDriversTable } from "./CustomDriversTable";
+import { RegisterButton } from "../Common/RegisterButton";
+import { BaseStyledPage } from "../Common/BaseStyledPage";
 
 type Props = {};
 
@@ -66,30 +68,15 @@ export const DriverPage: FunctionComponent<Props> = ({}) => {
   };
 
   return (
-    <div>
-      <ResponsiveAppBar />
-      <div>
-        {isAdmin && <CompanyFilter />}
-        <TargetFilter
-          targets={drivers}
-          setFilteredTargets={setFilteredDrivers}
-          filterField="nome"
-          filterName="Motorista"
-        />
-        <Box
-          sx={{ flexGrow: 1, display: "flex", justifyContent: "center", mb: 2 }}
-        >
-          <Button
-            component={Link}
-            to={`/driver/register`}
-            variant="contained"
-            color="primary"
-            disabled={!canRegister()}
-          >
-            Cadastrar
-          </Button>
-        </Box>
-      </div>
+    <BaseStyledPage>
+      {isAdmin && <CompanyFilter />}
+      <TargetFilter
+        targets={drivers}
+        setFilteredTargets={setFilteredDrivers}
+        filterField="nome"
+        filterName="Motorista"
+      />
+      <RegisterButton to={`/driver/register`} />
       <CustomDriversTable
         onRowCommand={onRowCommand}
         noRowOptions={false}
@@ -112,6 +99,6 @@ export const DriverPage: FunctionComponent<Props> = ({}) => {
           onDelete={onDelete}
         />
       )}
-    </div>
+    </BaseStyledPage>
   );
 };
