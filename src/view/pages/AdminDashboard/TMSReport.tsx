@@ -21,7 +21,8 @@ type Props = {
 
 export const TMSReport: FunctionComponent<Props> = ({ data, periodFilter }) => {
   const [showPanel, setShowPanel] = useState({ error: false, success: false });
-  const [reports, setReports] = useState<ReportValues[]>([]);
+  // const [reports, setReports] = useState<ReportValues[]>([]);
+  const reports = useSelector((state: RootState) => state.tms.reports);
   const [filtered, setFiltered] = useState<ReportValues[]>([]);
   const selectedCompanyId = useSelector(
     (state: RootState) => state.companies.adminSelectedCompanyId
@@ -29,7 +30,8 @@ export const TMSReport: FunctionComponent<Props> = ({ data, periodFilter }) => {
 
   useEffect(() => {
     // fetchReports(setReports);
-    listenReports(setReports);
+    // listenReports(setReports);
+    listenReports();
   }, []);
 
   const filterByDay = (reports: ReportValues[]) =>

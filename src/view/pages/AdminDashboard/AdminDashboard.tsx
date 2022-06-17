@@ -36,6 +36,10 @@ export const AdminDashboard: FunctionComponent<Props> = ({}) => {
         <Box
           sx={{
             width: 1400,
+            backgroundColor: "rgba(255,255,255,0.95)",
+            borderRadius: "5px",
+            mb: 2,
+            p: 0.5,
           }}
         >
           <Grid container spacing={1}>

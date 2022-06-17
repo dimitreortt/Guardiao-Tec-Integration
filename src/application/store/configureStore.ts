@@ -2,6 +2,7 @@ import authReducer from "./features/auth/authSlice";
 import driversReducer from "./features/drivers/driversSlice";
 import companyReducer from "./features/company/companySlice";
 import usersReducer from "./features/users/usersSlice";
+import tmsReducer from "./features/tms/tmsSlice";
 import { configureStore } from "@reduxjs/toolkit";
 
 export const store = configureStore({
@@ -10,6 +11,7 @@ export const store = configureStore({
     drivers: driversReducer,
     companies: companyReducer,
     users: usersReducer,
+    tms: tmsReducer,
   },
 });
 

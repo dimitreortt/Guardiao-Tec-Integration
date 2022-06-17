@@ -71,7 +71,7 @@ export const UsersList: FunctionComponent<Props> = ({}) => {
                 {row[2] ? "Sim" : "Não"}
               </TableCell>
               <TableCell align="center" key={uuid()}>
-                <Tooltip title="Bloquear">
+                <Tooltip title={row[2] ? "Desbloquear" : "Bloquear"}>
                   <IconButton
                     onClick={() => handleLock(row)}
                     sx={{ p: 0, mx: 0, my: 0, display: "block" }}
