@@ -31,7 +31,7 @@ export const TMSReport: FunctionComponent<Props> = ({ data, periodFilter }) => {
   useEffect(() => {
     // fetchReports(setReports);
     // listenReports(setReports);
-    listenReports();
+    // listenReports();
   }, []);
 
   const filterByDay = (reports: ReportValues[]) =>

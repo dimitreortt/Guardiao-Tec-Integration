@@ -9,7 +9,7 @@ import { AppRouter } from "./routers/AppRouter";
 import { store } from "./application/store/configureStore";
 import { Provider } from "react-redux";
 import { Box } from "@mui/system";
-import bgRef from "./assets/bg.jpeg";
+import bgRef from "./assets/bg1.jpeg";
 
 ReactDOM.render(
   <React.StrictMode>

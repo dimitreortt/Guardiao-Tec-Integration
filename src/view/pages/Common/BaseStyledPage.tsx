@@ -1,7 +1,7 @@
 import { Box } from "@mui/system";
 import React, { FunctionComponent } from "react";
 import { ResponsiveAppBar } from "../../components/Common/AppBar";
-import bgRef from "../../../assets/bg.jpeg";
+import bgRef from "../../../assets/bg1.jpeg";
 
 type Props = {
   children?: React.ReactNode;
