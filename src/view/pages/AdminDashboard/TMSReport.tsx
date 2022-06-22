@@ -4,25 +4,17 @@ import { isThisWeek, isToday } from "date-fns";
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../application/store/configureStore";
-import {
-  PlanningReportValues,
-  ReportValues,
-} from "../../../domain/entities/Report";
-import { fetchReports } from "../../../infra/services/fetchReports";
+import { PlanningReportValues } from "../../../domain/entities/Report";
 import { listenReports } from "../../../infra/services/listenReports";
-import { selectCurrentRelatedCompanyId } from "../../../infra/services/selectCurrentRelatedCompanyId";
 import { TMSErrorsReport } from "./TMSErrorsReport";
 import { TMSSuccessReport } from "./TMSSuccessReport";
+import { ExportButton } from "./ExportButton";
 
 type Props = {
-  data: {
-    error: number;
-    success: number;
-  };
   periodFilter?: "hoje" | "semana" | "geral";
 };
 
-export const TMSReport: FunctionComponent<Props> = ({ data, periodFilter }) => {
+export const TMSReport: FunctionComponent<Props> = ({ periodFilter }) => {
   const [showPanel, setShowPanel] = useState({ error: false, success: false });
   // const [reports, setReports] = useState<ReportValues[]>([]);
   const reports = useSelector((state: RootState) => state.tms.reports);
@@ -34,14 +26,18 @@ export const TMSReport: FunctionComponent<Props> = ({ data, periodFilter }) => {
   useEffect(() => {
     // fetchReports(setReports);
     // listenReports(setReports);
-    // listenReports();
+    listenReports();
   }, []);
 
   const filterByDay = (reports: PlanningReportValues[]) =>
-    reports.filter((r) => isToday(r.aberturaLinha));
+    reports.filter((r) => isToday(r.horarioEnvio));
 
   const filterByWeek = (reports: PlanningReportValues[]) =>
-    reports.filter((r) => isThisWeek(r.aberturaLinha));
+    reports.filter((r) => isThisWeek(r.horarioEnvio));
+
+  const sortByDate = (r1: PlanningReportValues, r2: PlanningReportValues) =>
+    //@ts-ignore
+    r1.aberturaLinha - r2.aberturaLinha;
 
   useEffect(() => {
     let filtered: PlanningReportValues[] = reports;
@@ -53,7 +49,7 @@ export const TMSReport: FunctionComponent<Props> = ({ data, periodFilter }) => {
     if (periodFilter === "semana") filtered = filterByWeek(filtered);
     if (periodFilter === "geral") filtered = filtered;
 
-    setFiltered(filtered);
+    setFiltered(filtered.sort(sortByDate));
   }, [reports, selectedCompanyId]);
 
   const expand = (panel: "error" | "success") => {
@@ -64,9 +60,14 @@ export const TMSReport: FunctionComponent<Props> = ({ data, periodFilter }) => {
     setShowPanel(newState);
   };
 
+  const handleExport = () => {
+    console.log(filtered);
+  };
+
   return (
     <div>
       <Box sx={{}}>
+        <ExportButton companyName={"name"} reports={filtered} />
         <Box
           sx={{
             backgroundColor: "rgba(255, 0, 0, 0.5)",

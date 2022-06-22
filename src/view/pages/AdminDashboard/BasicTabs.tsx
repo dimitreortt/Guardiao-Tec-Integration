@@ -54,19 +54,19 @@ export default function BasicTabs() {
           aria-label="basic tabs example"
         >
           <Tab label="Hoje" {...a11yProps(0)} />
-          <Tab label="Essa Semana" {...a11yProps(1)} />
-          <Tab label="Geral" {...a11yProps(2)} />
+          {/* <Tab label="Essa Semana" {...a11yProps(1)} />
+          <Tab label="Geral" {...a11yProps(2)} /> */}
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <TMSReport data={{ error: 5, success: 6 }} periodFilter={"hoje"} />
+        <TMSReport periodFilter={"hoje"} />
       </TabPanel>
-      <TabPanel value={value} index={1}>
-        <TMSReport data={{ error: 5, success: 6 }} periodFilter={"semana"} />
+      {/* <TabPanel value={value} index={1}>
+        <TMSReport periodFilter={"semana"} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <TMSReport data={{ error: 5, success: 6 }} periodFilter={"geral"} />
-      </TabPanel>
+        <TMSReport periodFilter={"geral"} />
+      </TabPanel> */}
     </Box>
   );
 }

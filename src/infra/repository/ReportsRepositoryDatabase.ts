@@ -50,7 +50,7 @@ export class ReportsRepositoryDatabase {
         const data: any = doc.data();
         // data.createdAt = data.createdAt.toDate();
         data.horarioEnvio = data.horarioEnvio.toDate();
-        data.averturaLinha = data.averturaLinha.toDate();
+        data.aberturaLinha = data.aberturaLinha.toDate();
         reports.push(data);
       });
       setReports(reports);
