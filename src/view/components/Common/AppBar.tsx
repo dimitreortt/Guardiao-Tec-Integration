@@ -14,6 +14,10 @@ import { AppBarOptionsPopover } from "./AppBarOptionsPopover";
 
 const pages = [
   {
+    name: "Dashboard",
+    path: "/adminDashboard",
+  },
+  {
     name: "Ficha Técnica",
     path: "/workscale",
   },
@@ -55,11 +59,14 @@ export const ResponsiveAppBar = () => {
   //   return pages;
   // };
 
+  if (isAdmin && pages[0].name !== "Dashboard")
+    pages.unshift({ name: "Dashborad", path: "/adminDashboard" });
+
   return (
     <AppBar position="static" sx={{ marginBottom: "15px" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {isAdmin && (
+          {/* {isAdmin && (
             <Box>
               <Button
                 component={Link}
@@ -70,7 +77,7 @@ export const ResponsiveAppBar = () => {
                 Dashboard
               </Button>
             </Box>
-          )}
+          )} */}
           <Box
             sx={{
               flexGrow: 1,
