@@ -1,11 +1,14 @@
 import moment from "moment";
 import React, { FunctionComponent } from "react";
-import { ReportValues } from "../../../domain/entities/Report";
+import {
+  PlanningReportValues,
+  ReportValues,
+} from "../../../domain/entities/Report";
 import { fetchCompanyName } from "../../../infra/services/fetchCompanyName";
 import { CustomTableWithoutOptions } from "../../components/Table/CustomTableWithoutOptions";
 moment.locale("pt-br");
 type Props = {
-  reports: ReportValues[];
+  reports: PlanningReportValues[];
 };
 
 const transpMap: any = {};
@@ -20,16 +23,18 @@ const getTranspName = async (transpId: string) => {
 
 export const TMSErrorsReport: FunctionComponent<Props> = ({ reports }) => {
   const tableHead = [
-    "Data",
-    "Status",
-    "Transportadora",
-    "Mensagem",
+    "Abertura Linha",
+    "Código TMS",
     "Ficha Técnica",
+    "Horário Envio",
+    "Linha",
+    "Placa",
+    "Reultado",
   ];
 
   const makeTableRows = () => {
     const rows: string[][] = [];
-    let errorsReports = reports.filter((f) => f.status === "error");
+    let errorsReports = reports.filter((f) => f.resultado === "Erro");
     errorsReports = errorsReports.sort(
       //@ts-ignore
       (r1, r2) => new Date(r2.createdAt) - new Date(r1.createdAt)
@@ -37,11 +42,13 @@ export const TMSErrorsReport: FunctionComponent<Props> = ({ reports }) => {
     for (const report of errorsReports) {
       //   const transpName = await getTranspName(vehicle.transpId);
       const row = [
-        moment(report.createdAt).format("DD/MM/yyyy hh:mm:ss"),
-        report.status,
-        report.transportadora,
-        report.message,
+        moment(report.aberturaLinha).format("DD/MM/yyyy hh:mm:ss"),
+        report.codigoTMS.toString(),
         report.ft,
+        moment(report.horarioEnvio).format("DD/MM/yyyy hh:mm:ss"),
+        report.linha,
+        report.placa,
+        report.resultado,
       ];
       rows.push(row);
     }

@@ -11,7 +11,12 @@ import {
   getDoc,
   onSnapshot,
 } from "firebase/firestore";
-import { Report, ReportValues } from "../../domain/entities/Report";
+import { getCurrentFormattedDate } from "../../application/service/getCurrentFormattedDate";
+import {
+  PlanningReportValues,
+  Report,
+  ReportValues,
+} from "../../domain/entities/Report";
 import { db } from "../../firebase/firebase";
 
 export class ReportsRepositoryDatabase {
@@ -34,12 +39,18 @@ export class ReportsRepositoryDatabase {
   }
 
   listenReports(setReports: any) {
-    const q = collection(this.db, "tmsReports");
+    const q = collection(
+      this.db,
+      `tmsPlanningReports/${getCurrentFormattedDate()}/reports`
+    );
+
     onSnapshot(q, (querySnapshot) => {
-      const reports: ReportValues[] = [];
+      const reports: PlanningReportValues[] = [];
       querySnapshot.forEach((doc) => {
         const data: any = doc.data();
-        data.createdAt = data.createdAt.toDate();
+        // data.createdAt = data.createdAt.toDate();
+        data.horarioEnvio = data.horarioEnvio.toDate();
+        data.averturaLinha = data.averturaLinha.toDate();
         reports.push(data);
       });
       setReports(reports);

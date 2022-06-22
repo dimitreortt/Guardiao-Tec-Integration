@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Report, ReportValues } from "../../../../domain/entities/Report";
-import { UserValues } from "../../../../domain/entities/User";
+import { PlanningReportValues } from "../../../../domain/entities/Report";
 
 // type Report = {
 //   status: "success" | "error";
@@ -12,7 +11,7 @@ import { UserValues } from "../../../../domain/entities/User";
 // };
 
 export interface tmsState {
-  reports: ReportValues[];
+  reports: PlanningReportValues[];
 }
 
 const initialState: tmsState = {
@@ -23,7 +22,7 @@ export const tmsSlice = createSlice({
   name: "tms",
   initialState,
   reducers: {
-    setReports: (state, action: PayloadAction<ReportValues[]>) => {
+    setReports: (state, action: PayloadAction<PlanningReportValues[]>) => {
       state.reports = action.payload;
     },
   },

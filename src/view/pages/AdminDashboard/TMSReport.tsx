@@ -4,7 +4,10 @@ import { isThisWeek, isToday } from "date-fns";
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../application/store/configureStore";
-import { ReportValues } from "../../../domain/entities/Report";
+import {
+  PlanningReportValues,
+  ReportValues,
+} from "../../../domain/entities/Report";
 import { fetchReports } from "../../../infra/services/fetchReports";
 import { listenReports } from "../../../infra/services/listenReports";
 import { selectCurrentRelatedCompanyId } from "../../../infra/services/selectCurrentRelatedCompanyId";
@@ -23,7 +26,7 @@ export const TMSReport: FunctionComponent<Props> = ({ data, periodFilter }) => {
   const [showPanel, setShowPanel] = useState({ error: false, success: false });
   // const [reports, setReports] = useState<ReportValues[]>([]);
   const reports = useSelector((state: RootState) => state.tms.reports);
-  const [filtered, setFiltered] = useState<ReportValues[]>([]);
+  const [filtered, setFiltered] = useState<PlanningReportValues[]>([]);
   const selectedCompanyId = useSelector(
     (state: RootState) => state.companies.adminSelectedCompanyId
   );
@@ -34,14 +37,14 @@ export const TMSReport: FunctionComponent<Props> = ({ data, periodFilter }) => {
     // listenReports();
   }, []);
 
-  const filterByDay = (reports: ReportValues[]) =>
-    reports.filter((r) => isToday(r.createdAt));
+  const filterByDay = (reports: PlanningReportValues[]) =>
+    reports.filter((r) => isToday(r.aberturaLinha));
 
-  const filterByWeek = (reports: ReportValues[]) =>
-    reports.filter((r) => isThisWeek(r.createdAt));
+  const filterByWeek = (reports: PlanningReportValues[]) =>
+    reports.filter((r) => isThisWeek(r.aberturaLinha));
 
   useEffect(() => {
-    let filtered: ReportValues[] = reports;
+    let filtered: PlanningReportValues[] = reports;
 
     if (selectedCompanyId && selectedCompanyId !== "Todas") {
       filtered = reports.filter((r) => r.transpId === selectedCompanyId);
@@ -95,7 +98,7 @@ export const TMSReport: FunctionComponent<Props> = ({ data, periodFilter }) => {
                 }}
               >
                 Erros de TMS:{" "}
-                {filtered.filter((r) => r.status === "error").length}
+                {filtered.filter((r) => r.resultado === "Erro").length}
               </Typography>
             </ButtonBase>
           </Box>
@@ -134,7 +137,7 @@ export const TMSReport: FunctionComponent<Props> = ({ data, periodFilter }) => {
                 }}
               >
                 TMS com sucesso:{" "}
-                {filtered.filter((r) => r.status === "success").length}
+                {filtered.filter((r) => r.resultado === "Sucesso").length}
               </Typography>
             </ButtonBase>
             <Box>
