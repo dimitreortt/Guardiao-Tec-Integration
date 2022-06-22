@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { MarkEmailReadOutlined } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { AppBarOptionsPopover } from "./AppBarOptionsPopover";
+import { GuardiaoLogotype } from "../../pages/Home/GuardiaoLogotype";
 
 const pages = [
   {
@@ -66,18 +67,19 @@ export const ResponsiveAppBar = () => {
     <AppBar position="static" sx={{ marginBottom: "15px" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/* {isAdmin && (
+          {isAdmin && (
             <Box>
-              <Button
+              <GuardiaoLogotype size={50} />
+              {/* <Button
                 component={Link}
                 to={"/adminDashboard"}
                 // onClick={() => handleRedirect(page)}
                 sx={{ mx: 0.8, my: 2, color: "white", display: "block" }}
               >
                 Dashboard
-              </Button>
+              </Button> */}
             </Box>
-          )} */}
+          )}
           <Box
             sx={{
               flexGrow: 1,
