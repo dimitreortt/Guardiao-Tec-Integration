@@ -19,6 +19,7 @@ import { DeleteConfirmDialog } from "../Common/DeleteConfirmDialog";
 import { selectCurrentRelatedCompanyId } from "../../../infra/services/selectCurrentRelatedCompanyId";
 import { BaseStyledPage } from "../Common/BaseStyledPage";
 import { RegisterButton } from "../Common/RegisterButton";
+import { DownloadFileDialog } from "../Common/DownloadFileDialog";
 
 type Props = {};
 
@@ -39,8 +40,26 @@ export const FTPage: FunctionComponent<Props> = ({}) => {
     // }
   }, [adminSelectedCompanyId, userCompanyId]);
 
+  const getFtFileComponent = (ft: FT) => {
+    const doc = ft.values.ftDocumentFileData;
+    if (!doc.storagePath) return "-";
+    let split = doc.name.split(".");
+    const buttonText = split[split.length - 1];
+    return (
+      <DownloadFileDialog
+        ftDocumentFileData={ft.values.ftDocumentFileData}
+        buttonText={buttonText}
+      />
+    );
+  };
+
+  const makeFrequenciaJoinString = (freq: string[]) => {
+    if (freq.length === 0) return "";
+    return freq.join(",");
+  };
+
   const makeTableRows = () => {
-    let rows: string[][] = [];
+    let rows: (string | JSX.Element)[][] = [];
     for (const ft of filteredFTs) {
       rows.push([
         ft.values["Numero de Contrato"],
@@ -49,8 +68,9 @@ export const FTPage: FunctionComponent<Props> = ({}) => {
         ft.values["Nº da FT"],
         ft.values["Nº da Linha"],
         moment(ft.values["Data de Vigencia Inicial"]).format("DD/MM/YY"),
-        ft.values["Frequência"].join(","),
+        makeFrequenciaJoinString(ft.values["Frequência"]),
         ft.values.Sentido,
+        getFtFileComponent(ft),
       ]);
     }
     return rows;
@@ -65,6 +85,7 @@ export const FTPage: FunctionComponent<Props> = ({}) => {
     "Data de Vigencia Inicial",
     "Frequência",
     "Sentido",
+    "Arquivo",
     "",
   ];
   const ftsTableRows = makeTableRows();
@@ -109,6 +130,7 @@ export const FTPage: FunctionComponent<Props> = ({}) => {
       <RegisterButton to={`/workscale/register`} />
       <CustomTable
         tableHead={ftsTableHead}
+        //@ts-ignore
         tableRows={ftsTableRows}
         onRowCommand={onRowCommand}
       />

@@ -35,7 +35,10 @@ export const RegisterFTForm: FunctionComponent<Props> = ({}) => {
   );
   const ftFields = ftFormFields();
 
-  const startState = () => setState(makeInitialFormState(ftFields));
+  const startState = () => {
+    setState(makeInitialFormState(ftFields));
+    setFile(undefined);
+  };
 
   useEffect(() => {
     startState();
@@ -55,16 +58,16 @@ export const RegisterFTForm: FunctionComponent<Props> = ({}) => {
     if (!cid) return setError("Nenhuma transportadora selecionada");
 
     try {
-      let FtDocument: any = {};
+      let ftDocumentFileData: any = {};
       if (file) {
         const { storagePath } = await uploadFileToStorage(cid, file);
-        FtDocument = {
+        ftDocumentFileData = {
           name: file.name,
           type: file.type,
           storagePath,
         };
       }
-      const ft = new FT({ ...state, FtDocument });
+      const ft = new FT({ ...state, ftDocumentFileData });
       const repo = new FTRepositoryDatabase();
       //await repo.addFT(ft);
 

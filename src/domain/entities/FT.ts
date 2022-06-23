@@ -1,3 +1,9 @@
+export type ftDocumentFileData = {
+  name: string;
+  type: string;
+  storagePath: string;
+};
+
 type FTValues = {
   "Numero de Contrato": string;
   Código: string;
@@ -7,11 +13,7 @@ type FTValues = {
   "Data de Vigencia Inicial": Date;
   Frequência: string[];
   Sentido: string;
-  FtDocument: {
-    name: string;
-    type: string;
-    storagePath: string;
-  };
+  ftDocumentFileData: ftDocumentFileData;
   Id?: string;
 };
 
