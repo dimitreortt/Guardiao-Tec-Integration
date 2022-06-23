@@ -20,7 +20,12 @@ export const FileUploader: FunctionComponent<Props> = ({ setFile, name }) => {
 
   return (
     <>
-      <Button onClick={handleClick}>{name ? name : "Upload a file"}</Button>
+      <Button
+        onClick={handleClick}
+        sx={{ textTransform: "none", fontSize: 15 }}
+      >
+        {name ? name : "Selecionar Arquivo"}
+      </Button>
       <input
         type="file"
         ref={hiddenFileInput}

@@ -20,6 +20,7 @@ import { RootState } from "../../../../application/store/configureStore";
 import { ftFormFields } from "./ftFormFields";
 import { makeInitialFormState } from "../Utils/makeInitialFormState";
 import { FileUploader } from "../../Common/FileUploader";
+import { uploadFileToStorage } from "../../../../infra/services/uploadFileToStorage";
 
 type Props = {};
 
@@ -50,8 +51,20 @@ export const RegisterFTForm: FunctionComponent<Props> = ({}) => {
   };
 
   const onSave = async () => {
+    let cid = userCompanyId ? userCompanyId : adminSelectedCompanyId;
+    if (!cid) return setError("Nenhuma transportadora selecionada");
+
     try {
-      const ft = new FT(state);
+      let FtDocument: any = {};
+      if (file) {
+        const { storagePath } = await uploadFileToStorage(cid, file);
+        FtDocument = {
+          name: file.name,
+          type: file.type,
+          storagePath,
+        };
+      }
+      const ft = new FT({ ...state, FtDocument });
       const repo = new FTRepositoryDatabase();
       //await repo.addFT(ft);
 
