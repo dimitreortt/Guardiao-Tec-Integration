@@ -16,16 +16,9 @@ export const deleteUser = async (user: UserValues) => {
     }
   ).then((res) => res.json());
 
-  console.log(response);
-
-  if (!response.sucess) {
+  if (!response.success) {
     throw new Error(response.msg);
   }
 
-  if (response.sucess) {
-  }
   await deleteUserFromFirestore(user.Id!);
-
-  //   console.log("indo deletar");
-  //   console.log(user);
 };
