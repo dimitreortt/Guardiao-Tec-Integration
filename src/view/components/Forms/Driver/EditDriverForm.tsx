@@ -1,13 +1,13 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
-import { AlertSnackbar } from '../../Common/AlertSnackbar';
-import { Dialog } from '@mui/material';
-import { BaseDriverForm } from './BaseDriverForm';
-import { Driver } from '../../../../domain/entities/Driver';
-import { DriverRepositoryDatabase } from '../../../../infra/repository/DriverRepositoryDatabase';
-import { RootState } from '../../../../application/store/configureStore';
-import { useSelector } from 'react-redux';
-import { makeInitialFormState } from '../Utils/makeInitialFormState';
-import { driverFormFields } from './driverFormFields';
+import React, { FunctionComponent, useEffect, useState } from "react";
+import { AlertSnackbar } from "../../Common/AlertSnackbar";
+import { Dialog } from "@mui/material";
+import { BaseDriverForm } from "./BaseDriverForm";
+import { Driver } from "../../../../domain/entities/Driver";
+import { DriverRepositoryDatabase } from "../../../../infra/repository/DriverRepositoryDatabase";
+import { RootState } from "../../../../application/store/configureStore";
+import { useSelector } from "react-redux";
+import { makeInitialFormState } from "../Utils/makeInitialFormState";
+import { driverFormFields } from "./driverFormFields";
 
 type Props = {
   open: boolean;
@@ -75,12 +75,12 @@ export const EditDriverForm: FunctionComponent<Props> = ({
 
       if (isAdmin && adminSelectedCompanyId) {
         await repo.updateDriver(driver, adminSelectedCompanyId, driverId);
-        setSuccessMessage('Motorista atualizado!');
+        setSuccessMessage("Motorista atualizado!");
         resetState(setState);
         // onClose();
       } else if (userCompanyId) {
         await repo.updateDriver(driver, userCompanyId, driverId);
-        setSuccessMessage('Motorista atualizado!');
+        setSuccessMessage("Motorista atualizado!");
         resetState(setState);
         // onClose();
       }
@@ -90,16 +90,16 @@ export const EditDriverForm: FunctionComponent<Props> = ({
   };
 
   return (
-    <Dialog open={open} onClose={onClose} aria-labelledby={'EditDriverForm'}>
+    <Dialog open={open} onClose={onClose} aria-labelledby={"EditDriverForm"}>
       <BaseDriverForm onSave={onSave} initialState={initialState} />
       <AlertSnackbar
         open={!!successMessage}
         onClose={onAlertClose}
-        severity='success'
+        severity="success"
       >
         {successMessage}
       </AlertSnackbar>
-      <AlertSnackbar open={!!error} onClose={onAlertClose} severity='error'>
+      <AlertSnackbar open={!!error} onClose={onAlertClose} severity="error">
         {error}
       </AlertSnackbar>
     </Dialog>

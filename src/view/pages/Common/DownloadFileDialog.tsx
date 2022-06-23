@@ -52,7 +52,7 @@ export const DownloadFileDialog: FunctionComponent<Props> = ({
         <DialogTitle>Baixar arquivo?</DialogTitle>
         <DialogContent>
           {url && (
-            <a href={url} download>
+            <a href={url} target="_blank" download>
               {ftDocumentFileData.name}
             </a>
           )}

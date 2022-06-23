@@ -1,6 +1,6 @@
-import { Driver } from './../../domain/entities/Driver';
-import { SetDriversType } from './../../application/store/features/drivers/driversSlice';
-import { db } from './../../firebase/firebase';
+import { Driver } from "./../../domain/entities/Driver";
+import { SetDriversType } from "./../../application/store/features/drivers/driversSlice";
+import { db } from "./../../firebase/firebase";
 import {
   addDoc,
   Firestore,
@@ -15,9 +15,9 @@ import {
   setDoc,
   doc,
   deleteDoc,
-} from 'firebase/firestore';
-import { onSnapshot } from 'firebase/firestore';
-import { DriverRepository } from './../../domain/repository/DriverRepository';
+} from "firebase/firestore";
+import { onSnapshot } from "firebase/firestore";
+import { DriverRepository } from "./../../domain/repository/DriverRepository";
 
 // export class DriverRepositoryDatabase implements DriverRepository {
 export class DriverRepositoryDatabase {
@@ -29,17 +29,18 @@ export class DriverRepositoryDatabase {
 
   async addDriver(driver: Driver, companyId: string): Promise<void> {
     const colRef = collection(this.db, `companies/${companyId}/drivers`);
-    const q = query(colRef, where('cnh', '==', driver.values.cnh));
+    const q = query(colRef, where("cnh", "==", driver.values.cnh));
     const querySnapshot = await getDocs(q);
 
     if (querySnapshot.docs.length > 0)
-      throw new Error('Motorista já cadastrado com essa cnh');
+      throw new Error("Motorista já cadastrado com essa cnh");
 
     const data = {
       cnh: driver.values.cnh,
       nome: driver.values.nome,
       contato: driver.values.contato,
       vencimento: driver.values.vencimento,
+      cnhDocument: driver.values.cnhDocument,
     };
 
     const driversCollectionRef = collection(
@@ -61,7 +62,7 @@ export class DriverRepositoryDatabase {
   }
 
   async getDrivers(): Promise<Driver[]> {
-    const colRef = collection(this.db, 'drivers');
+    const colRef = collection(this.db, "drivers");
     const q = query(colRef);
     return this.getDriversFromQuery(q);
   }
@@ -85,7 +86,7 @@ export class DriverRepositoryDatabase {
   }
 
   async adminGetAllDrivers() {
-    const driversQuery = query(collectionGroup(db, 'drivers'));
+    const driversQuery = query(collectionGroup(db, "drivers"));
     return this.getDriversFromQuery(driversQuery);
   }
 

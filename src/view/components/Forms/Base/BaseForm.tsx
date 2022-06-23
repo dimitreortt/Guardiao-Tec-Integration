@@ -1,17 +1,18 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Box, Button, Card, CardActions, CardHeader } from '@mui/material';
+import React, { FunctionComponent, useEffect, useState } from "react";
+import { Box, Button, Card, CardActions, CardHeader } from "@mui/material";
 import {
   FormFieldValue,
   IFormField,
-} from '../../../../domain/entities/FormField';
-import { RenderFormField } from '../../FormField/RenderFormField';
-import { makeInitialFormState } from '../Utils/makeInitialFormState';
+} from "../../../../domain/entities/FormField";
+import { RenderFormField } from "../../FormField/RenderFormField";
+import { makeInitialFormState } from "../Utils/makeInitialFormState";
 
 type Props = {
   onSave: (state: any, setState?: React.Dispatch<any>) => void;
   initialState?: object;
   formFields: IFormField[];
   formTitle: string;
+  appendice?: any;
 };
 
 export const BaseForm: FunctionComponent<Props> = ({
@@ -19,6 +20,7 @@ export const BaseForm: FunctionComponent<Props> = ({
   initialState,
   formFields,
   formTitle,
+  appendice,
 }) => {
   const [state, setState] = useState<any>({});
 
@@ -34,11 +36,11 @@ export const BaseForm: FunctionComponent<Props> = ({
   };
 
   return (
-    <Card sx={{ width: '400px', padding: '10px' }}>
-      <CardHeader title={formTitle} subheader='' />
+    <Card sx={{ width: "400px", padding: "10px" }}>
+      <CardHeader title={formTitle} subheader="" />
       {formFields.map((field: IFormField) => {
         return (
-          <Box sx={{ mb: '10px' }} key={field.id}>
+          <Box sx={{ mb: "10px" }} key={field.id}>
             <RenderFormField
               field={field}
               onChange={onChange}
@@ -47,12 +49,13 @@ export const BaseForm: FunctionComponent<Props> = ({
           </Box>
         );
       })}
+      {appendice}
 
       <CardActions>
         <Button
-          variant='contained'
-          color='primary'
-          size='small'
+          variant="contained"
+          color="primary"
+          size="small"
           onClick={() => onSave(state, setState)}
         >
           Salvar
