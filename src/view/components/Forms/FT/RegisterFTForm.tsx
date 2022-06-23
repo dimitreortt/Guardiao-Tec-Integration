@@ -1,17 +1,25 @@
-import { Box, Button, Card, CardActions, CardHeader } from '@mui/material';
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import {
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardHeader,
+  TextField,
+} from "@mui/material";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import {
   FormFieldValue,
   IFormField,
-} from '../../../../domain/entities/FormField';
-import { AlertSnackbar } from '../../Common/AlertSnackbar';
-import { RenderFormField } from '../../FormField/RenderFormField';
-import { FTRepositoryDatabase } from '../../../../infra/repository/FTRepositoryDatabase';
-import { FT } from '../../../../domain/entities/FT';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../application/store/configureStore';
-import { ftFormFields } from './ftFormFields';
-import { makeInitialFormState } from '../Utils/makeInitialFormState';
+} from "../../../../domain/entities/FormField";
+import { AlertSnackbar } from "../../Common/AlertSnackbar";
+import { RenderFormField } from "../../FormField/RenderFormField";
+import { FTRepositoryDatabase } from "../../../../infra/repository/FTRepositoryDatabase";
+import { FT } from "../../../../domain/entities/FT";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../application/store/configureStore";
+import { ftFormFields } from "./ftFormFields";
+import { makeInitialFormState } from "../Utils/makeInitialFormState";
+import { FileUploader } from "../../Common/FileUploader";
 
 type Props = {};
 
@@ -20,6 +28,7 @@ export const RegisterFTForm: FunctionComponent<Props> = ({}) => {
   const [error, setError] = useState<string>();
   const [successMessage, setSuccessMessage] = useState<string>();
   const { userId, isAdmin } = useSelector((state: RootState) => state.auth);
+  const [file, setFile] = useState<File>();
   const { userCompanyId, adminSelectedCompanyId } = useSelector(
     (state: RootState) => state.companies
   );
@@ -49,11 +58,11 @@ export const RegisterFTForm: FunctionComponent<Props> = ({}) => {
       //   startState();
       if (isAdmin && adminSelectedCompanyId) {
         await repo.addFT(ft, adminSelectedCompanyId);
-        setSuccessMessage('Ficha Técnica cadastrada!');
+        setSuccessMessage("Ficha Técnica cadastrada!");
         startState();
       } else if (userCompanyId) {
         await repo.addFT(ft, userCompanyId);
-        setSuccessMessage('Ficha Técnica cadastrada!');
+        setSuccessMessage("Ficha Técnica cadastrada!");
         startState();
       }
     } catch (error: any) {
@@ -62,11 +71,11 @@ export const RegisterFTForm: FunctionComponent<Props> = ({}) => {
   };
 
   return (
-    <Card sx={{ width: '400px', padding: '10px' }}>
-      <CardHeader title='Cadastro de Ficha Técnica' subheader='' />
+    <Card sx={{ width: "400px", padding: "10px" }}>
+      <CardHeader title="Cadastro de Ficha Técnica" subheader="" />
       {ftFields.map((field: IFormField, index) => {
         return (
-          <Box sx={{ mb: '10px' }} key={index}>
+          <Box sx={{ mb: "10px" }} key={index}>
             <RenderFormField
               field={field}
               onChange={onChange}
@@ -75,24 +84,34 @@ export const RegisterFTForm: FunctionComponent<Props> = ({}) => {
           </Box>
         );
       })}
+      <Box
+        sx={{
+          mb: "10px",
+          border: "1px solid",
+          borderRadius: "5px",
+          borderColor: "#bbb",
+        }}
+      >
+        <FileUploader setFile={setFile} name={file?.name} />
+      </Box>
 
       <CardActions>
         <Button
-          variant='contained'
-          color='primary'
-          size='small'
+          variant="contained"
+          color="primary"
+          size="small"
           onClick={onSave}
         >
           Salvar
         </Button>
       </CardActions>
-      <AlertSnackbar open={!!error} onClose={onAlertClose} severity='warning'>
+      <AlertSnackbar open={!!error} onClose={onAlertClose} severity="warning">
         {error}
       </AlertSnackbar>
       <AlertSnackbar
         open={!!successMessage}
         onClose={onAlertClose}
-        severity='success'
+        severity="success"
       >
         {successMessage}
       </AlertSnackbar>
