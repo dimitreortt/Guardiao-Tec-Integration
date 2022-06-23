@@ -9,8 +9,9 @@ export const fetchUsers = async () => {
   const repo = new UserRepositoryDatabase();
 
   if (isAdmin && !users) {
-    const response = await repo.getUsers();
-    store.dispatch(setUsers(response));
+    const response = await repo.getUsers((response: any) =>
+      store.dispatch(setUsers(response))
+    );
   } else if (!isAdmin) {
     throw new Error("non-admin user trying to fetch users!");
   }

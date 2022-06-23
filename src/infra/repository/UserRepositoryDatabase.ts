@@ -1,4 +1,10 @@
-import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDocs,
+  onSnapshot,
+  updateDoc,
+} from "firebase/firestore";
 import { User, UserValues } from "../../domain/entities/User";
 import { db } from "../../firebase/firebase";
 import { serverUrl } from "./serverUrl";
@@ -24,16 +30,19 @@ export class UserRepositoryDatabase {
     return response;
   }
 
-  async getUsers() {
+  async getUsers(setUsers?: any) {
     const colRef = collection(db, "users");
-    const querySnapshot = await getDocs(colRef);
-    let users: UserValues[] = [];
-    querySnapshot.forEach((doc) => {
-      const data: any = doc.data();
-      data.Id = doc.id;
-      users.push(data);
+    onSnapshot(colRef, (querySnapshot) => {
+      // const querySnapshot = await getDocs(colRef);
+      let users: UserValues[] = [];
+      querySnapshot.forEach((doc) => {
+        const data: any = doc.data();
+        data.Id = doc.id;
+        users.push(data);
+      });
+      setUsers(users);
+      // return users;
     });
-    return users;
   }
 
   async blockUser(user: UserValues) {
