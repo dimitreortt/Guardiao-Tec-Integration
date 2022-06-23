@@ -1,9 +1,13 @@
 import { Button } from "@mui/material";
 import React, { FunctionComponent } from "react";
 
-type Props = { setFile: any; name?: string };
+type Props = { setFile: any; name?: string; onUpload?: any };
 
-export const FileUploader: FunctionComponent<Props> = ({ setFile, name }) => {
+export const FileUploader: FunctionComponent<Props> = ({
+  setFile,
+  name,
+  onUpload = () => {},
+}) => {
   const hiddenFileInput = React.useRef(null);
 
   const handleClick = () => {
@@ -15,6 +19,7 @@ export const FileUploader: FunctionComponent<Props> = ({ setFile, name }) => {
     //@ts-ignore
     const fileUploaded = event.target.files[0];
     setFile(fileUploaded);
+    onUpload();
     // props.handleFile(fileUploaded);
   };
 
