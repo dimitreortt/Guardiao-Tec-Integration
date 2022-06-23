@@ -1,10 +1,10 @@
-import { Box, Card, CardContent, CardHeader } from '@mui/material';
-import React, { FunctionComponent, useEffect, useState } from 'react';
-import { ResponsiveAppBar } from '../../components/Common/AppBar';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../application/store/configureStore';
-import { getCompanyInfo } from '../../../application/service/getUserCompanyInfo';
-import { GuardiaoTecInfoBox } from './GuardiaoTecInfoBox';
+import { Box, Card, CardContent, CardHeader } from "@mui/material";
+import React, { FunctionComponent, useEffect, useState } from "react";
+import { ResponsiveAppBar } from "../../components/Common/AppBar";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../application/store/configureStore";
+import { getCompanyInfo } from "../../../application/service/getUserCompanyInfo";
+import { GuardiaoTecInfoBox } from "./GuardiaoTecInfoBox";
 // import { RootState } from '../application/store/configureStore';
 
 type Props = {};
@@ -26,17 +26,17 @@ export const RegularHomePage: FunctionComponent<Props> = ({}) => {
   return (
     <div>
       <ResponsiveAppBar />
-      <GuardiaoTecInfoBox />
+      {/* <GuardiaoTecInfoBox /> */}
       <Box
         sx={{
           flexGrow: 1,
           //   textAlign: 'center',
-          fontSize: '2rem',
-          fontWeight: '600',
+          fontSize: "2rem",
+          fontWeight: "600",
           letterSpacing: 1.5,
-          display: 'flex',
+          display: "flex",
           //   alignItems: 'center',
-          justifyContent: 'center',
+          justifyContent: "center",
           marginBottom: 1,
           marginTop: 1,
         }}
@@ -44,12 +44,12 @@ export const RegularHomePage: FunctionComponent<Props> = ({}) => {
         {/* <Typography variant='h1'>GuardiaoTech</Typography> */}
         <br />
 
-        <Card sx={{ width: 600, backgroundColor: '#ddddff' }}>
+        {/* <Card sx={{ width: 600, backgroundColor: '#ddddff' }}>
           <CardHeader title={companyInfo?.Transportadora} />
           <CardContent>
             Responsável: {companyInfo && companyInfo['Responsável']}
           </CardContent>
-        </Card>
+        </Card> */}
       </Box>
     </div>
   );

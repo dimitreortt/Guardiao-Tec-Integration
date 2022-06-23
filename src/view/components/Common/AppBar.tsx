@@ -22,10 +22,10 @@ const pages = [
     name: "Ficha Técnica",
     path: "/workscale",
   },
-  {
-    name: "Transportadora",
-    path: "/company",
-  },
+  // {
+  //   name: "Transportadora",
+  //   path: "/company",
+  // },
   {
     name: "Veículo",
     path: "/vehicle",
@@ -48,17 +48,17 @@ export const ResponsiveAppBar = () => {
   // const handleRedirect = (page) => {};
   const { userId, isAdmin } = useSelector((state: RootState) => state.auth);
 
-  // const makePages = () => {
-  //   if (isAdmin) {
-  //     return [
-  //       {
-  //         name: 'Transportadora',
-  //         path: '/company',
-  //       },
-  //     ].concat(pages);
-  //   }
-  //   return pages;
-  // };
+  const makePages = () => {
+    if (isAdmin) {
+      return [
+        {
+          name: "Transportadora",
+          path: "/company",
+        },
+      ].concat(pages);
+    }
+    return pages;
+  };
 
   if (isAdmin && pages[0].name !== "Dashboard")
     pages.unshift({ name: "Dashborad", path: "/adminDashboard" });
@@ -97,7 +97,7 @@ export const ResponsiveAppBar = () => {
               LOGO
             </Typography> */}
 
-            {pages.map((page) => (
+            {makePages().map((page) => (
               <Button
                 component={Link}
                 to={`${page.path}`}

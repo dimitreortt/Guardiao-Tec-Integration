@@ -11,7 +11,6 @@ import { fetchFTs } from "../../../infra/services/fetchFTs";
 import { CompanyFilter } from "../../components/Filter/CompanyFilter";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../application/store/configureStore";
-import { canRegister } from "../../../application/service/canRegister";
 import { TargetFilter } from "../Common/TargetFilter";
 import { RowCommand } from "../../components/Table/TableRowOptions";
 import { EditFTForm } from "../../components/Forms/FT/EditFTForm";
@@ -42,6 +41,7 @@ export const FTPage: FunctionComponent<Props> = ({}) => {
 
   const getFtFileComponent = (ft: FT) => {
     const doc = ft.values.ftDocumentFileData;
+    if (!doc) return "-";
     if (!doc.storagePath) return "-";
     let split = doc.name.split(".");
     const buttonText = split[split.length - 1];

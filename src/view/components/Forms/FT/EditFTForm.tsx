@@ -1,15 +1,15 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
-import { AlertSnackbar } from '../../Common/AlertSnackbar';
-import { Dialog } from '@mui/material';
-import { Driver } from '../../../../domain/entities/Driver';
-import { RootState } from '../../../../application/store/configureStore';
-import { useSelector } from 'react-redux';
-import { makeInitialFormState } from '../Utils/makeInitialFormState';
-import { ftFormFields } from './ftFormFields';
-import { FT } from '../../../../domain/entities/FT';
-import { BaseFTForm } from './BaseFTForm';
-import { selectCurrentRelatedCompanyId } from '../../../../infra/services/selectCurrentRelatedCompanyId';
-import { FTRepositoryDatabase } from '../../../../infra/repository/FTRepositoryDatabase';
+import React, { FunctionComponent, useEffect, useState } from "react";
+import { AlertSnackbar } from "../../Common/AlertSnackbar";
+import { Dialog } from "@mui/material";
+import { Driver } from "../../../../domain/entities/Driver";
+import { RootState } from "../../../../application/store/configureStore";
+import { useSelector } from "react-redux";
+import { makeInitialFormState } from "../Utils/makeInitialFormState";
+import { ftFormFields } from "./ftFormFields";
+import { FT } from "../../../../domain/entities/FT";
+import { BaseFTForm } from "./BaseFTForm";
+import { selectCurrentRelatedCompanyId } from "../../../../infra/services/selectCurrentRelatedCompanyId";
+import { FTRepositoryDatabase } from "../../../../infra/repository/FTRepositoryDatabase";
 
 type Props = {
   open: boolean;
@@ -58,10 +58,10 @@ export const EditFTForm: FunctionComponent<Props> = ({
       const companyId = selectCurrentRelatedCompanyId();
       if (!companyId)
         throw new Error(
-          'Id de transportadora não identificado! Impossível salvar FT!'
+          "Id de transportadora não identificado! Impossível salvar FT!"
         );
-      await repo.updateFT(ft, adminSelectedCompanyId, ftId);
-      setSuccessMessage('Ficha Técnica atualizada!');
+      await repo.updateFT(ft, companyId, ftId);
+      setSuccessMessage("Ficha Técnica atualizada!");
       resetState(setState);
     } catch (error: any) {
       setError(error.message);
@@ -69,16 +69,16 @@ export const EditFTForm: FunctionComponent<Props> = ({
   };
 
   return (
-    <Dialog open={open} onClose={onClose} aria-labelledby={'EditFTForm'}>
+    <Dialog open={open} onClose={onClose} aria-labelledby={"EditFTForm"}>
       <BaseFTForm onSave={onSave} initialState={initialState} />
       <AlertSnackbar
         open={!!successMessage}
         onClose={onAlertClose}
-        severity='success'
+        severity="success"
       >
         {successMessage}
       </AlertSnackbar>
-      <AlertSnackbar open={!!error} onClose={onAlertClose} severity='error'>
+      <AlertSnackbar open={!!error} onClose={onAlertClose} severity="error">
         {error}
       </AlertSnackbar>
     </Dialog>

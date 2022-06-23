@@ -1,19 +1,19 @@
-import React, { FunctionComponent, useState } from 'react';
-import Popover from '@mui/material/Popover';
+import React, { FunctionComponent, useState } from "react";
+import Popover from "@mui/material/Popover";
 import {
   IconButton,
   List,
   ListItemButton,
   ListItemText,
   ListSubheader,
-} from '@mui/material';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../application/store/configureStore';
+} from "@mui/material";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../application/store/configureStore";
 
-export type RowCommand = 'edit' | 'delete';
+export type RowCommand = "edit" | "delete";
 
 type Props = {
   onRowCommand: (command: RowCommand, row: string[]) => void;
@@ -40,20 +40,20 @@ export const TableRowOptions: FunctionComponent<Props> = ({
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+  const id = open ? "simple-popover" : undefined;
 
   const handleEdit = () => {
     // setInEditField((prev) => !prev);
-    onRowCommand('edit', row);
+    onRowCommand("edit", row);
   };
 
   const handleDelete = () => {
-    onRowCommand('delete', row);
+    onRowCommand("delete", row);
   };
 
   return (
     <div>
-      <IconButton aria-describedby={id} color='secondary' onClick={handleClick}>
+      <IconButton aria-describedby={id} color="secondary" onClick={handleClick}>
         <MoreHorizIcon />
       </IconButton>
       <Popover
@@ -62,28 +62,30 @@ export const TableRowOptions: FunctionComponent<Props> = ({
         anchorEl={anchorEl}
         onClose={handleClose}
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
+          vertical: "bottom",
+          horizontal: "left",
         }}
       >
         <List
-          sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-          component='nav'
-          aria-labelledby='nested-list-subheader'
+          sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+          component="nav"
+          aria-labelledby="nested-list-subheader"
           subheader={
-            <ListSubheader component='div' id='nested-list-subheader'>
+            <ListSubheader component="div" id="nested-list-subheader">
               Opções
             </ListSubheader>
           }
         >
           <ListItemButton onClick={handleEdit}>
             <EditIcon></EditIcon>
-            <ListItemText primary='Editar' />
+            <ListItemText primary="Editar" />
           </ListItemButton>
-          {(user?.accessType === 'Administrador' || isAdmin) && (
+          {(user?.accessType === "Administrador" ||
+            user?.accessType === "Editor" ||
+            isAdmin) && (
             <ListItemButton onClick={handleDelete}>
               <DeleteIcon></DeleteIcon>
-              <ListItemText primary='Deletar' />
+              <ListItemText primary="Deletar" />
             </ListItemButton>
           )}
         </List>

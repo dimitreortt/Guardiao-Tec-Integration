@@ -34,7 +34,7 @@ export const CompanyFilter: FunctionComponent<Props> = ({}) => {
   return (
     <Box sx={{ position: "absolute", left: 10, top: 80 }}>
       <Box sx={{ mb: 1.3 }}>
-        <FormControl sx={{ minWidth: 200 }} fullWidth>
+        <FormControl sx={{ width: 200 }} fullWidth>
           <InputLabel id="demo-simple-select-helper-label">
             Transportadora
           </InputLabel>
