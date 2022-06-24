@@ -32,6 +32,7 @@ export const CustomDriversTable: FunctionComponent<Props> = ({
 
   const getCnhFileComponent = (driver: Driver) => {
     const doc = driver.values.cnhDocument;
+    console.log(driver.values);
     if (!doc) return "-";
     if (!doc.storagePath) return "-";
     let split = doc.name.split(".");
