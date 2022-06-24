@@ -50,12 +50,18 @@ export const ResponsiveAppBar = () => {
 
   const makePages = () => {
     if (isAdmin) {
-      return [
-        {
-          name: "Transportadora",
-          path: "/company",
-        },
-      ].concat(pages);
+      // return [
+      //   {
+      //     name: "Transportadora",
+      //     path: "/company",
+      //   },
+      // ].concat(pages);
+      const a = [...pages];
+      a.splice(1, 0, {
+        name: "Transportadora",
+        path: "/company",
+      });
+      return a;
     }
     return pages;
   };
@@ -67,19 +73,7 @@ export const ResponsiveAppBar = () => {
     <AppBar position="static" sx={{ marginBottom: "15px" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {isAdmin && (
-            <Box>
-              <GuardiaoLogotype size={50} />
-              {/* <Button
-                component={Link}
-                to={"/adminDashboard"}
-                // onClick={() => handleRedirect(page)}
-                sx={{ mx: 0.8, my: 2, color: "white", display: "block" }}
-              >
-                Dashboard
-              </Button> */}
-            </Box>
-          )}
+          <GuardiaoLogotype size={50} />
           <Box
             sx={{
               flexGrow: 1,

@@ -9,6 +9,7 @@ import { listenReports } from "../../../infra/services/listenReports";
 import { TMSErrorsReport } from "./TMSErrorsReport";
 import { TMSSuccessReport } from "./TMSSuccessReport";
 import { ExportButton } from "./ExportButton";
+import { selectCurrentRelatedCompanyId } from "../../../infra/services/selectCurrentRelatedCompanyId";
 
 type Props = {
   periodFilter?: "hoje" | "semana" | "geral";
@@ -41,6 +42,8 @@ export const TMSReport: FunctionComponent<Props> = ({ periodFilter }) => {
 
   useEffect(() => {
     let filtered: PlanningReportValues[] = reports;
+
+    const selectedCompanyId = selectCurrentRelatedCompanyId();
 
     if (selectedCompanyId && selectedCompanyId !== "Todas") {
       filtered = reports.filter((r) => r.transpId === selectedCompanyId);

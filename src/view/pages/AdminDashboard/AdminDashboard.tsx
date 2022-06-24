@@ -45,17 +45,23 @@ export const AdminDashboard: FunctionComponent<Props> = ({}) => {
           <Grid container spacing={1}>
             <Grid item xs={12} md={12}>
               <DataBox title="Relatórios">
-                <Box sx={{ position: "relative", top: -80, mb: 8, left: -10 }}>
-                  <CompanyFilter />
-                </Box>
+                {isAdmin && (
+                  <Box
+                    sx={{ position: "relative", top: -80, mb: 8, left: -10 }}
+                  >
+                    <CompanyFilter />
+                  </Box>
+                )}
                 <BasicTabs />
               </DataBox>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <DataBox title="Usuários">
-                <UsersList />
-              </DataBox>
-            </Grid>
+            {isAdmin && (
+              <Grid item xs={12} md={6}>
+                <DataBox title="Usuários">
+                  <UsersList />
+                </DataBox>
+              </Grid>
+            )}
             <Grid item xs={12} md={6}>
               <DataBox title="CNHs">
                 <Typography textAlign="center" gutterBottom>
