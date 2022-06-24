@@ -3,7 +3,7 @@ import { Box, Button } from "@mui/material";
 import { ResponsiveAppBar } from "../../components/Common/AppBar";
 import { Link } from "react-router-dom";
 import { CustomTable } from "../../components/Table/CustomTable";
-import { Itinerary } from "../../../domain/entities/Itinerary";
+import { Itinerary, ItineraryValue } from "../../../domain/entities/Itinerary";
 import { useEffect } from "react";
 import { useState } from "react";
 import { ItineraryRepositoryDatabase } from "../../../infra/repository/ItineraryRepositoryDatabase";
@@ -50,18 +50,33 @@ export const ItineraryPage: FunctionComponent<Props> = ({}) => {
     );
 
     for (const itinerary of itineraries) {
+      const values = itinerary.values;
+      const dateTimeFields: ItineraryValue[] = [
+        "Chegada",
+        "Partida",
+        "Serviço",
+        "Espera",
+        "Livre",
+        "Horas",
+      ];
+
+      const formatedFields = dateTimeFields.map((field: ItineraryValue) =>
+        values[field] ? moment(values[field]).format("HH:mm") : ""
+      );
+
       rows.push([
         itinerary.values["LTU Correspondente"],
         itinerary.values.Sequencia,
         itinerary.values.CTO,
         itinerary.values["Ponto De Parada"],
         itinerary.values.Km,
-        moment(itinerary.values.Chegada).format("HH:mm"),
-        moment(itinerary.values.Partida).format("HH:mm"),
-        moment(itinerary.values.Serviço).format("HH:mm"),
-        moment(itinerary.values.Espera).format("HH:mm"),
-        moment(itinerary.values.Livre).format("HH:mm"),
-        moment(itinerary.values.Horas).format("HH:mm"),
+        // moment(itinerary.values.Chegada).format("HH:mm"),
+        // moment(itinerary.values.Partida).format("HH:mm"),
+        // moment(itinerary.values.Serviço).format("HH:mm"),
+        // moment(itinerary.values.Espera).format("HH:mm"),
+        // moment(itinerary.values.Livre).format("HH:mm"),
+        // moment(itinerary.values.Horas).format("HH:mm"),
+        ...formatedFields,
         itinerary.values.Serviços,
         itinerary.values.Endereço,
       ]);

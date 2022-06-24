@@ -1,4 +1,4 @@
-import { Itinerary } from './../../domain/entities/Itinerary';
+import { Itinerary } from "./../../domain/entities/Itinerary";
 import {
   addDoc,
   Firestore,
@@ -12,8 +12,8 @@ import {
   setDoc,
   deleteDoc,
   doc,
-} from 'firebase/firestore';
-import { db } from './../../firebase/firebase';
+} from "firebase/firestore";
+import { db } from "./../../firebase/firebase";
 
 export class ItineraryRepositoryDatabase {
   db: Firestore;
@@ -26,12 +26,12 @@ export class ItineraryRepositoryDatabase {
     const colRef = collection(this.db, `companies/${companyId}/itineraries`);
     const q = query(
       colRef,
-      where('LTU Correspondente', '==', itinerary.values['LTU Correspondente']),
-      where('Sequencia', '==', itinerary.values.Sequencia)
+      where("LTU Correspondente", "==", itinerary.values["LTU Correspondente"]),
+      where("Sequencia", "==", itinerary.values.Sequencia)
     );
     const qSnapshot = await getDocs(q);
     if (qSnapshot.docs.length > 0)
-      throw new Error('Já existe um registro nessa LTU com essa sequência!');
+      throw new Error("Já existe um registro nessa LTU com essa sequência!");
 
     addDoc(colRef, itinerary.values);
   }
@@ -49,7 +49,7 @@ export class ItineraryRepositoryDatabase {
   }
 
   async getItineraries(): Promise<Itinerary[]> {
-    const colRef = collection(this.db, 'itineraries');
+    const colRef = collection(this.db, "itineraries");
     return this.getItinerariesFromQuery(colRef);
   }
 
@@ -58,12 +58,22 @@ export class ItineraryRepositoryDatabase {
     let itineraries: Itinerary[] = [];
     querySnapshot.forEach((doc) => {
       const data: any = doc.data();
-      data['Chegada'] = data['Chegada'].toDate();
-      data['Partida'] = data['Partida'].toDate();
-      data['Serviço'] = data['Serviço'].toDate();
-      data['Espera'] = data['Espera'].toDate();
-      data['Livre'] = data['Livre'].toDate();
-      data['Horas'] = data['Horas'].toDate();
+      for (const field of [
+        "Chegada",
+        "Partida",
+        "Serviço",
+        "Espera",
+        "Livre",
+        "Horas",
+      ]) {
+        if (data[field]) data[field] = data[field].toDate();
+      }
+      // data["Chegada"] = data["Chegada"].toDate();
+      // data["Partida"] = data["Partida"].toDate();
+      // data["Serviço"] = data["Serviço"].toDate();
+      // data["Espera"] = data["Espera"].toDate();
+      // data["Livre"] = data["Livre"].toDate();
+      // data["Horas"] = data["Horas"].toDate();
       data.Id = doc.id;
       itineraries.push(new Itinerary(data));
     });
@@ -71,7 +81,7 @@ export class ItineraryRepositoryDatabase {
   }
 
   async adminGetAllItineraries() {
-    const query = collectionGroup(this.db, 'itineraries');
+    const query = collectionGroup(this.db, "itineraries");
     return this.getItinerariesFromQuery(query);
   }
 
@@ -81,8 +91,8 @@ export class ItineraryRepositoryDatabase {
   }
 
   async getItinerariesFromLTU(LTU: string) {
-    const group = collectionGroup(this.db, 'itineraries');
-    const q = query(group, where('LTU Correspondente', '==', LTU));
+    const group = collectionGroup(this.db, "itineraries");
+    const q = query(group, where("LTU Correspondente", "==", LTU));
     return this.getItinerariesFromQuery(q);
   }
 

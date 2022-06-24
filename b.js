@@ -1,5 +1,7 @@
 const a = [1, 2, 3, 4];
 
-const b = a.slice(1);
+const b = [1, 2, 3];
 
-console.log(a, b);
+const c = [...b, ...a];
+
+console.log(c);
