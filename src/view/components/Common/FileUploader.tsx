@@ -1,12 +1,18 @@
 import { Button } from "@mui/material";
 import React, { FunctionComponent } from "react";
 
-type Props = { setFile: any; name?: string; onUpload?: any };
+type Props = {
+  setFile: any;
+  name?: string;
+  onUpload?: any;
+  buttonText?: string;
+};
 
 export const FileUploader: FunctionComponent<Props> = ({
   setFile,
   name,
   onUpload = () => {},
+  buttonText,
 }) => {
   const hiddenFileInput = React.useRef(null);
 
@@ -29,7 +35,7 @@ export const FileUploader: FunctionComponent<Props> = ({
         onClick={handleClick}
         sx={{ textTransform: "none", fontSize: 15 }}
       >
-        {name ? name : "Selecionar Arquivo"}
+        {name ? name : buttonText ? buttonText : "Selecionar Arquivo"}
       </Button>
       <input
         type="file"

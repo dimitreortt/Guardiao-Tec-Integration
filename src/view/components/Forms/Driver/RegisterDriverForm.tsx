@@ -87,7 +87,11 @@ export const RegisterDriverForm: FunctionComponent<Props> = ({}) => {
         borderColor: "#bbb",
       }}
     >
-      <FileUploader setFile={setFile} name={file?.name} />
+      <FileUploader
+        setFile={setFile}
+        name={file?.name}
+        buttonText={"Selecionar Arquivo de CNH"}
+      />
     </Box>
   );
 

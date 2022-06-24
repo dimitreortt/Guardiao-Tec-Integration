@@ -45,7 +45,8 @@ export const EditFTForm: FunctionComponent<Props> = ({
   };
 
   useEffect(() => {
-    setPreviousFilename(ft.values.ftDocumentFileData.name);
+    const docData = ft.values.ftDocumentFileData;
+    if (docData?.name) setPreviousFilename(ft.values.ftDocumentFileData.name);
   }, []);
 
   useEffect(() => {
@@ -116,6 +117,7 @@ export const EditFTForm: FunctionComponent<Props> = ({
         setFile={setFile}
         name={file?.name || previousFilename}
         onUpload={onUpload}
+        buttonText={'Selecionar Arquivo de Ficha Técnica'}
       />
     </Box>
   );

@@ -139,6 +139,7 @@ export const EditDriverForm: FunctionComponent<Props> = ({
         setFile={setFile}
         name={file?.name || previousFilename}
         onUpload={onUpload}
+        buttonText={"Selecionar Arquivo de CNH"}
       />
     </Box>
   );

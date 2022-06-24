@@ -108,7 +108,11 @@ export const RegisterFTForm: FunctionComponent<Props> = ({}) => {
           borderColor: "#bbb",
         }}
       >
-        <FileUploader setFile={setFile} name={file?.name} />
+        <FileUploader
+          setFile={setFile}
+          name={file?.name}
+          buttonText={"Selecionar Arquivo de Ficha Técnica"}
+        />
       </Box>
 
       <CardActions>
