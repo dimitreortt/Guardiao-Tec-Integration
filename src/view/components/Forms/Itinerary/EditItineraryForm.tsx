@@ -65,11 +65,7 @@ export const EditItineraryForm: FunctionComponent<Props> = ({
         throw new Error(
           "Id de transportadora não identificado! Impossível salvar atualização no Plano de Viagem!"
         );
-      await repo.updateItinerary(
-        itinerary,
-        adminSelectedCompanyId,
-        itineraryId
-      );
+      await repo.updateItinerary(itinerary, companyId, itineraryId);
       setSuccessMessage("Plano de Viagem atualizada!");
       resetState(setState);
     } catch (error: any) {
