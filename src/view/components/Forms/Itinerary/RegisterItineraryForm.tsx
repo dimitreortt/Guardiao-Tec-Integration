@@ -1,19 +1,19 @@
-import { Box, Button, Card, CardActions, CardHeader } from '@mui/material';
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import { Box, Button, Card, CardActions, CardHeader } from "@mui/material";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import {
   FormFieldValue,
   IFormField,
-} from '../../../../domain/entities/FormField';
-import { AlertSnackbar } from '../../Common/AlertSnackbar';
-import { RenderFormField } from '../../FormField/RenderFormField';
-import { ItineraryRepositoryDatabase } from '../../../../infra/repository/ItineraryRepositoryDatabase';
-import { Itinerary } from '../../../../domain/entities/Itinerary';
-import { FT } from '../../../../domain/entities/FT';
-import { fetchFTs } from '../../../../infra/services/fetchFTs';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../application/store/configureStore';
-import { useItineraryFormFields } from './useItineraryFormFields';
-import { makeInitialFormState } from '../Utils/makeInitialFormState';
+} from "../../../../domain/entities/FormField";
+import { AlertSnackbar } from "../../Common/AlertSnackbar";
+import { RenderFormField } from "../../FormField/RenderFormField";
+import { ItineraryRepositoryDatabase } from "../../../../infra/repository/ItineraryRepositoryDatabase";
+import { Itinerary } from "../../../../domain/entities/Itinerary";
+import { FT } from "../../../../domain/entities/FT";
+import { fetchFTs } from "../../../../infra/services/fetchFTs";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../application/store/configureStore";
+import { useItineraryFormFields } from "./useItineraryFormFields";
+import { makeInitialFormState } from "../Utils/makeInitialFormState";
 
 type Props = {};
 
@@ -50,15 +50,17 @@ export const RegisterItineraryForm: FunctionComponent<Props> = ({}) => {
 
   const onSave = async () => {
     try {
+      if (!state["LTU Correspondente"])
+        throw new Error("Selecione uma LTU Correspondente");
       const itinerary = new Itinerary(state);
       const repo = new ItineraryRepositoryDatabase();
       if (isAdmin && adminSelectedCompanyId) {
         await repo.addItinerary(itinerary, adminSelectedCompanyId);
-        setSuccessMessage('Cadastrado!');
+        setSuccessMessage("Cadastrado!");
         startState();
       } else if (userCompanyId) {
         await repo.addItinerary(itinerary, userCompanyId);
-        setSuccessMessage('Cadastrado!');
+        setSuccessMessage("Cadastrado!");
         startState();
       }
     } catch (error: any) {
@@ -67,11 +69,11 @@ export const RegisterItineraryForm: FunctionComponent<Props> = ({}) => {
   };
 
   return (
-    <Card sx={{ width: '400px', padding: '10px' }}>
-      <CardHeader title='Cadastro de Plano de Viagem' subheader='' />
+    <Card sx={{ width: "400px", padding: "10px" }}>
+      <CardHeader title="Cadastro de Plano de Viagem" subheader="" />
       {itineraryFields.map((field: IFormField) => {
         return (
-          <Box sx={{ mb: '10px' }} key={field.id}>
+          <Box sx={{ mb: "10px" }} key={field.id}>
             <RenderFormField
               field={field}
               onChange={onChange}
@@ -83,21 +85,21 @@ export const RegisterItineraryForm: FunctionComponent<Props> = ({}) => {
 
       <CardActions>
         <Button
-          variant='contained'
-          color='primary'
-          size='small'
+          variant="contained"
+          color="primary"
+          size="small"
           onClick={onSave}
         >
           Salvar
         </Button>
       </CardActions>
-      <AlertSnackbar open={!!error} onClose={onAlertClose} severity='warning'>
+      <AlertSnackbar open={!!error} onClose={onAlertClose} severity="warning">
         {error}
       </AlertSnackbar>
       <AlertSnackbar
         open={!!successMessage}
         onClose={onAlertClose}
-        severity='success'
+        severity="success"
       >
         {successMessage}
       </AlertSnackbar>
