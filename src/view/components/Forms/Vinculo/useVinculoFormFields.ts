@@ -1,17 +1,17 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
-import { IFormField } from '../../../../domain/entities/FormField';
-import { Vinculo } from '../../../../domain/entities/Vinculo';
-import { Company } from '../../../../domain/entities/Company';
-import { VehicleRepositoryDatabase } from '../../../../infra/repository/VehicleRepositoryDatabase';
-import { Vehicle } from '../../../../domain/entities/Vehicle';
-import { Itinerary } from '../../../../domain/entities/Itinerary';
-import { ItineraryRepositoryDatabase } from '../../../../infra/repository/ItineraryRepositoryDatabase';
-import { DriverRepositoryDatabase } from '../../../../infra/repository/DriverRepositoryDatabase';
-import { Driver } from '../../../../domain/entities/Driver';
-import { FTRepositoryDatabase } from '../../../../infra/repository/FTRepositoryDatabase';
-import { FT } from '../../../../domain/entities/FT';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../application/store/configureStore';
+import React, { FunctionComponent, useEffect, useState } from "react";
+import { IFormField } from "../../../../domain/entities/FormField";
+import { Vinculo } from "../../../../domain/entities/Vinculo";
+import { Company } from "../../../../domain/entities/Company";
+import { VehicleRepositoryDatabase } from "../../../../infra/repository/VehicleRepositoryDatabase";
+import { Vehicle } from "../../../../domain/entities/Vehicle";
+import { Itinerary } from "../../../../domain/entities/Itinerary";
+import { ItineraryRepositoryDatabase } from "../../../../infra/repository/ItineraryRepositoryDatabase";
+import { DriverRepositoryDatabase } from "../../../../infra/repository/DriverRepositoryDatabase";
+import { Driver } from "../../../../domain/entities/Driver";
+import { FTRepositoryDatabase } from "../../../../infra/repository/FTRepositoryDatabase";
+import { FT } from "../../../../domain/entities/FT";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../application/store/configureStore";
 
 export const useVinculoFormFields = () => {
   const [drivers, setDrivers] = useState<Driver[]>([]);
@@ -22,7 +22,7 @@ export const useVinculoFormFields = () => {
   const { selectedLTU, adminSelectedCompanyId, userCompanyId } = useSelector(
     (state: RootState) => state.companies
   );
-  const [selectedCompanyId, setSelectedCompanyId] = useState('');
+  const [selectedCompanyId, setSelectedCompanyId] = useState("");
 
   useEffect(() => {
     if (isAdmin && adminSelectedCompanyId) {
@@ -63,34 +63,42 @@ export const useVinculoFormFields = () => {
 
   const vinculoFields: IFormField[] = [
     {
-      label: 'Ficha Técnica',
-      type: 'List Selection',
-      options: fts.map((ft) => ft.values['Nº da FT']),
+      label: "Ficha Técnica",
+      type: "List Selection",
+      options: fts.map((ft) => ft.values["Nº da FT"]),
       id: 4,
-      helpertText: 'Inserir o número Ficha Técnica',
+      helpertText: "Inserir o número Ficha Técnica",
     },
     {
-      label: 'Veículo',
-      type: 'List Selection',
+      label: "Veículo",
+      type: "List Selection",
       options: vehicles.map((v) => v.values.Placa),
       id: 2,
       index: 2,
-      helpertText: 'Inserir a placa do veículo',
+      helpertText: "Inserir a placa do veículo",
     },
     {
-      label: 'Motorista',
-      type: 'List Selection',
+      label: "Motorista",
+      type: "List Selection",
       options: drivers.map((d) => d.values.nome),
       id: 1,
       index: 1,
-      helpertText: 'Inserir o nome do motorista',
+      helpertText: "Inserir o nome do motorista",
     },
     {
-      label: 'Plano de Viagem',
-      type: 'List Selection',
-      options: fts.map((ft) => ft.values['Nº da Linha']),
+      label: "Motorista 2",
+      type: "List Selection",
+      options: [...drivers.map((d) => d.values.nome), "Nenhum"],
+      id: 5,
+      index: 5,
+      helpertText: "Inserir o nome do segundo motorista, se houver",
+    },
+    {
+      label: "Plano de Viagem",
+      type: "List Selection",
+      options: fts.map((ft) => ft.values["Nº da Linha"]),
       id: 3,
-      helpertText: 'Inserir a LTU do Plano de Viagem',
+      helpertText: "Inserir a LTU do Plano de Viagem",
     },
   ];
 
