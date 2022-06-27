@@ -1,17 +1,17 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
-import { AlertSnackbar } from '../../Common/AlertSnackbar';
-import { Dialog } from '@mui/material';
-import { Driver } from '../../../../domain/entities/Driver';
-import { RootState } from '../../../../application/store/configureStore';
-import { useSelector } from 'react-redux';
-import { makeInitialFormState } from '../Utils/makeInitialFormState';
-import { FT } from '../../../../domain/entities/FT';
-import { selectCurrentRelatedCompanyId } from '../../../../infra/services/selectCurrentRelatedCompanyId';
-import { FTRepositoryDatabase } from '../../../../infra/repository/FTRepositoryDatabase';
-import { useItineraryFormFields } from './useItineraryFormFields';
-import { Itinerary } from '../../../../domain/entities/Itinerary';
-import { ItineraryRepositoryDatabase } from '../../../../infra/repository/ItineraryRepositoryDatabase';
-import { BaseItineraryForm } from './BaseItineraryForm';
+import React, { FunctionComponent, useEffect, useState } from "react";
+import { AlertSnackbar } from "../../Common/AlertSnackbar";
+import { Dialog } from "@mui/material";
+import { Driver } from "../../../../domain/entities/Driver";
+import { RootState } from "../../../../application/store/configureStore";
+import { useSelector } from "react-redux";
+import { makeInitialFormState } from "../Utils/makeInitialFormState";
+import { FT } from "../../../../domain/entities/FT";
+import { selectCurrentRelatedCompanyId } from "../../../../infra/services/selectCurrentRelatedCompanyId";
+import { FTRepositoryDatabase } from "../../../../infra/repository/FTRepositoryDatabase";
+import { useItineraryFormFields } from "./useItineraryFormFields";
+import { Itinerary } from "../../../../domain/entities/Itinerary";
+import { ItineraryRepositoryDatabase } from "../../../../infra/repository/ItineraryRepositoryDatabase";
+import { BaseItineraryForm } from "./BaseItineraryForm";
 
 type Props = {
   open: boolean;
@@ -54,21 +54,23 @@ export const EditItineraryForm: FunctionComponent<Props> = ({
 
   const onSave = async (state: any, setState: any) => {
     try {
-      for (const key in state)
-        if (!state[key]) throw new Error(`Campo ${key} inválido!`);
+      if (!state["LTU Correspondente"])
+        throw new Error("Selecione uma LTU Correspondente");
+      // for (const key in state)
+      //   if (!state[key]) throw new Error(`Campo ${key} inválido!`);
       const itinerary = new Itinerary(state);
       const repo = new ItineraryRepositoryDatabase();
       const companyId = selectCurrentRelatedCompanyId();
       if (!companyId)
         throw new Error(
-          'Id de transportadora não identificado! Impossível salvar atualização no Plano de Viagem!'
+          "Id de transportadora não identificado! Impossível salvar atualização no Plano de Viagem!"
         );
       await repo.updateItinerary(
         itinerary,
         adminSelectedCompanyId,
         itineraryId
       );
-      setSuccessMessage('Plano de Viagem atualizada!');
+      setSuccessMessage("Plano de Viagem atualizada!");
       resetState(setState);
     } catch (error: any) {
       setError(error.message);
@@ -76,16 +78,16 @@ export const EditItineraryForm: FunctionComponent<Props> = ({
   };
 
   return (
-    <Dialog open={open} onClose={onClose} aria-labelledby={'EditItineraryForm'}>
+    <Dialog open={open} onClose={onClose} aria-labelledby={"EditItineraryForm"}>
       <BaseItineraryForm onSave={onSave} initialState={initialState} />
       <AlertSnackbar
         open={!!successMessage}
         onClose={onAlertClose}
-        severity='success'
+        severity="success"
       >
         {successMessage}
       </AlertSnackbar>
-      <AlertSnackbar open={!!error} onClose={onAlertClose} severity='error'>
+      <AlertSnackbar open={!!error} onClose={onAlertClose} severity="error">
         {error}
       </AlertSnackbar>
     </Dialog>
