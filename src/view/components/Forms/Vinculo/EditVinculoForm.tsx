@@ -82,13 +82,6 @@ export const EditVinculoForm: FunctionComponent<Props> = ({
       for (const key in state)
         if (!state[key]) throw new Error(`Campo ${key} inválido!`);
 
-      // const newState = {
-      //   ...state,
-      //   "Motorista 2":
-      //     state["Motorista 2"] === "Nenhum" ? "" : state["Motorista 2"],
-      // };
-      // const vinculo = new Vinculo({ Transportadora: companyName, ...newState });
-
       let newState = {
         Transportadora: companyName,
         ...state,

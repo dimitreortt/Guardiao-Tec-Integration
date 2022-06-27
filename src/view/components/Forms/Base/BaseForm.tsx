@@ -13,6 +13,7 @@ type Props = {
   formFields: IFormField[];
   formTitle: string;
   appendice?: any;
+  prependice?: any;
 };
 
 export const BaseForm: FunctionComponent<Props> = ({
@@ -21,6 +22,7 @@ export const BaseForm: FunctionComponent<Props> = ({
   formFields,
   formTitle,
   appendice,
+  prependice,
 }) => {
   const [state, setState] = useState<any>({});
 
@@ -40,6 +42,7 @@ export const BaseForm: FunctionComponent<Props> = ({
   return (
     <Card sx={{ width: "400px", padding: "10px" }}>
       <CardHeader title={formTitle} subheader="" />
+      {prependice}
       {formFields.map((field: IFormField) => {
         return (
           <Box sx={{ mb: "10px" }} key={field.id}>

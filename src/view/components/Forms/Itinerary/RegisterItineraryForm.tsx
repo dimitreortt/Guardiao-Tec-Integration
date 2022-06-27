@@ -1,4 +1,11 @@
-import { Box, Button, Card, CardActions, CardHeader } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardHeader,
+  TextField,
+} from "@mui/material";
 import React, { FunctionComponent, useEffect, useState } from "react";
 import {
   FormFieldValue,
@@ -14,6 +21,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../application/store/configureStore";
 import { useItineraryFormFields } from "./useItineraryFormFields";
 import { makeInitialFormState } from "../Utils/makeInitialFormState";
+import { useLTUField } from "./useLTUField";
 
 type Props = {};
 
@@ -21,7 +29,9 @@ export const RegisterItineraryForm: FunctionComponent<Props> = ({}) => {
   const [state, setState] = useState<any>({});
   const [error, setError] = useState<string>();
   const [successMessage, setSuccessMessage] = useState<string>();
+  const [ltuFilter, setLtuFilter] = useState<string>("");
   const { userId, isAdmin } = useSelector((state: RootState) => state.auth);
+  const LTUFF = useLTUField();
   const { userCompanyId, adminSelectedCompanyId } = useSelector(
     (state: RootState) => state.companies
   );
@@ -33,19 +43,33 @@ export const RegisterItineraryForm: FunctionComponent<Props> = ({}) => {
 
   const itineraryFields = useItineraryFormFields();
 
-  const startState = () => setState(makeInitialFormState(itineraryFields));
+  const startState = () => {
+    setState(
+      makeInitialFormState([
+        //@ts-ignore
+        ...itineraryFields,
+        //@ts-ignore
+        { label: "LTU Correspondente" },
+      ])
+    );
+  };
 
   useEffect(() => {
     startState();
   }, []);
 
   const onChange = (label: string, value: FormFieldValue) => {
+    console.log(label, value);
     setState({ ...state, [label]: value });
   };
 
   const onAlertClose = () => {
     setError(undefined);
     setSuccessMessage(undefined);
+  };
+
+  const onLtuFilterChange = (event: any) => {
+    setLtuFilter(event.target.value);
   };
 
   const onSave = async () => {
@@ -71,7 +95,24 @@ export const RegisterItineraryForm: FunctionComponent<Props> = ({}) => {
   return (
     <Card sx={{ width: "400px", padding: "10px" }}>
       <CardHeader title="Cadastro de Plano de Viagem" subheader="" />
-      {itineraryFields.map((field: IFormField) => {
+      <Box sx={{ mb: "10px" }}>
+        <TextField
+          key={"latrka"}
+          id="ltufilter"
+          label="Filtro de LTU"
+          size="small"
+          value={ltuFilter}
+          onChange={onLtuFilterChange}
+        />
+      </Box>
+
+      <LTUFF
+        onChange={onChange}
+        value={state["LTU Correspondente"]}
+        ltuFilter={ltuFilter}
+      />
+      {/* @ts-ignore */}
+      {[...itineraryFields].map((field: IFormField) => {
         return (
           <Box sx={{ mb: "10px" }} key={field.id}>
             <RenderFormField

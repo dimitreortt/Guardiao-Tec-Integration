@@ -19,6 +19,7 @@ import { DeleteConfirmDialog } from "../Common/DeleteConfirmDialog";
 import { EditVinculoForm } from "../../components/Forms/Vinculo/EditVinculoForm";
 import { RegisterButton } from "../Common/RegisterButton";
 import { BaseStyledPage } from "../Common/BaseStyledPage";
+import { Test } from "../../components/Forms/Vinculo/Test";
 
 type Props = {};
 
@@ -138,6 +139,7 @@ export const VinculoPage: FunctionComponent<Props> = ({}) => {
           onDelete={onDelete}
         />
       )}
+      <Test />
     </BaseStyledPage>
   );
 };
