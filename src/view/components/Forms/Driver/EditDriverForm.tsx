@@ -100,6 +100,7 @@ export const EditDriverForm: FunctionComponent<Props> = ({
         cnh: state.CNH,
         contato: state.Contato,
         vencimento: state.Vencimento,
+        Período: state["Período"],
         cnhDocument,
       };
 

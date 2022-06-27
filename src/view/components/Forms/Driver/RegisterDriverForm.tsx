@@ -37,6 +37,8 @@ export const RegisterDriverForm: FunctionComponent<Props> = ({}) => {
     let cid = userCompanyId ? userCompanyId : adminSelectedCompanyId;
     if (!cid) return setError("Nenhuma transportadora selecionada");
 
+    console.log("rasdasd");
+
     try {
       let cnhDocument: any = {};
       if (file) {
@@ -58,8 +60,12 @@ export const RegisterDriverForm: FunctionComponent<Props> = ({}) => {
         cnh: state.CNH,
         contato: state.Contato,
         vencimento: state.Vencimento,
+        Período: state["Período"],
         cnhDocument,
       };
+
+      console.log(driverValues);
+      console.log(state);
 
       const driver = new Driver(driverValues);
       const repo = new DriverRepositoryDatabase();

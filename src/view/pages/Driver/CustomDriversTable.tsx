@@ -24,6 +24,7 @@ export const CustomDriversTable: FunctionComponent<Props> = ({
     "Contato",
     "CNH",
     "Vencimento CNH",
+    "Período",
     "Arquivo",
     // "", // necessário para a simetria da tabela
   ];
@@ -32,7 +33,7 @@ export const CustomDriversTable: FunctionComponent<Props> = ({
 
   const getCnhFileComponent = (driver: Driver) => {
     const doc = driver.values.cnhDocument;
-    console.log(driver.values);
+    // console.log(driver.values);
     if (!doc) return "-";
     if (!doc.storagePath) return "-";
     let split = doc.name.split(".");
@@ -53,6 +54,7 @@ export const CustomDriversTable: FunctionComponent<Props> = ({
         driver.values.contato,
         driver.values.cnh,
         moment(driver.values.vencimento).format("MM/YYYY"),
+        driver.values.Período,
         getCnhFileComponent(driver),
       ];
       if (ommitFields?.includes("contato")) row.splice(1, 1);

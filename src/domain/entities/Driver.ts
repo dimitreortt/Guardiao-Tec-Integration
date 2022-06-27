@@ -9,6 +9,7 @@ type DriverValues = {
   cnh: string;
   contato: string;
   vencimento: Date;
+  Período?: string;
   cnhDocument?: cnhDocument;
   Id?: string;
 };

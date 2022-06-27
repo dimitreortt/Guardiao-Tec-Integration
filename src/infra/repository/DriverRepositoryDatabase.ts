@@ -41,6 +41,7 @@ export class DriverRepositoryDatabase {
       contato: driver.values.contato,
       vencimento: driver.values.vencimento,
       cnhDocument: driver.values.cnhDocument,
+      Período: driver.values.Período,
     };
 
     const driversCollectionRef = collection(
@@ -58,6 +59,7 @@ export class DriverRepositoryDatabase {
       contato: driver.values.contato,
       vencimento: driver.values.vencimento,
       cnhDocument: driver.values.cnhDocument,
+      Período: driver.values.Período,
     };
     setDoc(docRef, data);
   }
