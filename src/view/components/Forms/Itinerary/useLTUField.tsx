@@ -5,6 +5,7 @@ import { FT } from "../../../../domain/entities/FT";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../application/store/configureStore";
 import {
+  Box,
   FormControl,
   FormHelperText,
   InputLabel,
@@ -44,16 +45,6 @@ export const useLTUField = () => {
     setOptions(fts.map((ft) => ft.values["Nº da Linha"]));
   }, [fts]);
 
-  // useEffect(() => {
-  //   setFilteredOptions(options.filter((o) => o.includes(ltuFilter)));
-  // }, [ltuFilter, options]);
-
-  const onOpen = () => setIsSelectorOpen((prev) => !prev);
-
-  const onClose = () => setIsSelectorOpen(false);
-
-  console.log(isSelectorOpen);
-
   const label = "LTU Correspondente";
 
   return ({ onChange, value, helperText, ltuFilter }: any) => {
@@ -65,7 +56,7 @@ export const useLTUField = () => {
     const filteredOptions = options.filter((o) => o.includes(ltuFilter));
 
     return (
-      <React.Fragment>
+      <Box sx={{ mb: "10px" }}>
         <FormControl sx={{ minWidth: 120 }} fullWidth>
           <InputLabel id="demo-simple-select-helper-label">
             {"LTU Correspondente"}
@@ -91,7 +82,7 @@ export const useLTUField = () => {
           </Select>
           <FormHelperText>{helperText}</FormHelperText>
         </FormControl>
-      </React.Fragment>
+      </Box>
     );
   };
 };

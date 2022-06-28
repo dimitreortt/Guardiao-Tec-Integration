@@ -58,7 +58,7 @@ export class DriverRepositoryDatabase {
       nome: driver.values.nome,
       contato: driver.values.contato,
       vencimento: driver.values.vencimento,
-      cnhDocument: driver.values.cnhDocument,
+      cnhDocument: driver.values.cnhDocument || {},
       Período: driver.values.Período,
     };
     setDoc(docRef, data);
