@@ -1,5 +1,10 @@
-const a = '123 1s';
-const b = 123;
+const a = {
+  12: "amor",
+};
 
-console.log(Number(a));
-console.log(Number(b));
+console.log(a[12]);
+
+const date1 = new Date("03/07/2022");
+const date2 = new Date("03/08/2022");
+
+console.log(date1, date2);
