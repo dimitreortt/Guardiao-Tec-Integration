@@ -12,6 +12,7 @@ import { useItineraryFormFields } from "./useItineraryFormFields";
 import { Itinerary } from "../../../../domain/entities/Itinerary";
 import { ItineraryRepositoryDatabase } from "../../../../infra/repository/ItineraryRepositoryDatabase";
 import { BaseItineraryForm } from "./BaseItineraryForm";
+import { selectCurrentSelectedLTU } from "../../../../application/store/selectors/selectCurrentSelectedLTU";
 
 type Props = {
   open: boolean;
@@ -29,10 +30,6 @@ export const EditItineraryForm: FunctionComponent<Props> = ({
   const [error, setError] = useState<string>();
   const [successMessage, setSuccessMessage] = useState<string>();
   const [initialState, setInitialState] = useState<any>();
-  const { userId, isAdmin } = useSelector((state: RootState) => state.auth);
-  const { userCompanyId, adminSelectedCompanyId } = useSelector(
-    (state: RootState) => state.companies
-  );
   const itineraryFields = useItineraryFormFields();
 
   const resetState = (setState: any) =>
@@ -54,11 +51,13 @@ export const EditItineraryForm: FunctionComponent<Props> = ({
 
   const onSave = async (state: any, setState: any) => {
     try {
-      if (!state["LTU Correspondente"])
-        throw new Error("Selecione uma LTU Correspondente");
-      // for (const key in state)
-      //   if (!state[key]) throw new Error(`Campo ${key} inválido!`);
-      const itinerary = new Itinerary(state);
+      const ltu = selectCurrentSelectedLTU();
+      if (!ltu) throw new Error("Selecione uma LTU Correspondente");
+
+      const itinerary = new Itinerary({
+        ...state,
+        ["LTU Correspondente"]: ltu,
+      });
       const repo = new ItineraryRepositoryDatabase();
       const companyId = selectCurrentRelatedCompanyId();
       if (!companyId)
