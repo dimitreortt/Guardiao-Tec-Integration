@@ -1,7 +1,4 @@
 import React, { FunctionComponent } from "react";
-import { Box, Button } from "@mui/material";
-import { ResponsiveAppBar } from "../../components/Common/AppBar";
-import { Link } from "react-router-dom";
 import { CustomTable } from "../../components/Table/CustomTable";
 import { Vinculo } from "../../../domain/entities/Vinculo";
 import { useEffect } from "react";
@@ -11,8 +8,6 @@ import { RootState } from "../../../application/store/configureStore";
 import { useSelector } from "react-redux";
 import { fetchVinculos } from "../../../infra/services/fetchVinculos";
 import { CompanyFilter } from "../../components/Filter/CompanyFilter";
-import { canRegister } from "../../../application/service/canRegister";
-import { TargetFilter } from "../Common/TargetFilter";
 import { RowCommand } from "../../components/Table/TableRowOptions";
 import { selectCurrentRelatedCompanyId } from "../../../infra/services/selectCurrentRelatedCompanyId";
 import { DeleteConfirmDialog } from "../Common/DeleteConfirmDialog";
@@ -31,9 +26,7 @@ export const VinculoPage: FunctionComponent<Props> = ({}) => {
   const { userCompanyId, adminSelectedCompanyId } = useSelector(
     (state: RootState) => state.companies
   );
-  const { userId, isAdmin, user } = useSelector(
-    (state: RootState) => state.auth
-  );
+  const { isAdmin } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     if (adminSelectedCompanyId || userCompanyId) {

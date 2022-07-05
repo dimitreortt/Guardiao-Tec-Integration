@@ -1,13 +1,8 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { AlertSnackbar } from "../../Common/AlertSnackbar";
 import { Dialog } from "@mui/material";
-import { Driver } from "../../../../domain/entities/Driver";
-import { RootState } from "../../../../application/store/configureStore";
-import { useSelector } from "react-redux";
 import { makeInitialFormState } from "../Utils/makeInitialFormState";
-import { FT } from "../../../../domain/entities/FT";
 import { selectCurrentRelatedCompanyId } from "../../../../infra/services/selectCurrentRelatedCompanyId";
-import { FTRepositoryDatabase } from "../../../../infra/repository/FTRepositoryDatabase";
 import { useItineraryFormFields } from "./useItineraryFormFields";
 import { Itinerary } from "../../../../domain/entities/Itinerary";
 import { ItineraryRepositoryDatabase } from "../../../../infra/repository/ItineraryRepositoryDatabase";

@@ -15,8 +15,6 @@ import { AlertSnackbar } from "../../Common/AlertSnackbar";
 import { RenderFormField } from "../../FormField/RenderFormField";
 import { ItineraryRepositoryDatabase } from "../../../../infra/repository/ItineraryRepositoryDatabase";
 import { Itinerary } from "../../../../domain/entities/Itinerary";
-import { FT } from "../../../../domain/entities/FT";
-import { fetchFTs } from "../../../../infra/services/fetchFTs";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../application/store/configureStore";
 import { useItineraryFormFields } from "./useItineraryFormFields";
@@ -30,16 +28,16 @@ export const RegisterItineraryForm: FunctionComponent<Props> = ({}) => {
   const [error, setError] = useState<string>();
   const [successMessage, setSuccessMessage] = useState<string>();
   const [ltuFilter, setLtuFilter] = useState<string>("");
-  const { userId, isAdmin } = useSelector((state: RootState) => state.auth);
+  const { isAdmin } = useSelector((state: RootState) => state.auth);
   const LTUFF = useLTUField();
   const { userCompanyId, adminSelectedCompanyId } = useSelector(
     (state: RootState) => state.companies
   );
-  const [fts, setFTs] = useState<FT[]>([]);
+  // const [fts, setFTs] = useState<FT[]>([]);
 
-  useEffect(() => {
-    fetchFTs(setFTs);
-  }, []);
+  // useEffect(() => {
+  //   fetchFTs(setFTs);
+  // }, []);
 
   const itineraryFields = useItineraryFormFields();
 

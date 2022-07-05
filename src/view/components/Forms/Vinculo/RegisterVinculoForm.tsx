@@ -15,21 +15,11 @@ import { AlertSnackbar } from "../../Common/AlertSnackbar";
 import { RenderFormField } from "../../FormField/RenderFormField";
 import { VinculoRepositoryDatabase } from "../../../../infra/repository/VinculoRepositoryDatabase";
 import { Vinculo } from "../../../../domain/entities/Vinculo";
-import { Company } from "../../../../domain/entities/Company";
-import { VehicleRepositoryDatabase } from "../../../../infra/repository/VehicleRepositoryDatabase";
-import { Vehicle } from "../../../../domain/entities/Vehicle";
-import { Itinerary } from "../../../../domain/entities/Itinerary";
-import { ItineraryRepositoryDatabase } from "../../../../infra/repository/ItineraryRepositoryDatabase";
-import { DriverRepositoryDatabase } from "../../../../infra/repository/DriverRepositoryDatabase";
-import { Driver } from "../../../../domain/entities/Driver";
-import { FTRepositoryDatabase } from "../../../../infra/repository/FTRepositoryDatabase";
-import { FT } from "../../../../domain/entities/FT";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../application/store/configureStore";
 import { getCompanyInfo } from "../../../../application/service/getUserCompanyInfo";
 import { useVinculoFormFields } from "./useVinculoFormFields";
 import { selectCurrentRelatedCompanyId } from "../../../../infra/services/selectCurrentRelatedCompanyId";
-import { Filter } from "@mui/icons-material";
 
 type Props = {};
 
@@ -46,12 +36,8 @@ export const RegisterVinculoForm: FunctionComponent<Props> = ({}) => {
   const [error, setError] = useState<string>();
   const [successMessage, setSuccessMessage] = useState<string>();
   const [companyName, setCompanyName] = useState("");
-  const [selectedCompanyId, setSelectedCompanyId] = useState("");
   const [ftFilter, setFtFilter] = useState("");
   let vinculoFields = useVinculoFormFields();
-  const [ftField, setFtField] = useState<IFormField>(vinculoFields[0]);
-  const [filteredFtField, setFilteredFtField] = useState<IFormField>(ftField);
-  const { userId, isAdmin } = useSelector((state: RootState) => state.auth);
   const { userCompanyId, adminSelectedCompanyId } = useSelector(
     (state: RootState) => state.companies
   );
