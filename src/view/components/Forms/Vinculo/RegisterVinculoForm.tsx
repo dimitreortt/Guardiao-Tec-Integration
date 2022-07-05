@@ -29,6 +29,7 @@ import { RootState } from "../../../../application/store/configureStore";
 import { getCompanyInfo } from "../../../../application/service/getUserCompanyInfo";
 import { useVinculoFormFields } from "./useVinculoFormFields";
 import { selectCurrentRelatedCompanyId } from "../../../../infra/services/selectCurrentRelatedCompanyId";
+import { Filter } from "@mui/icons-material";
 
 type Props = {};
 
@@ -46,13 +47,20 @@ export const RegisterVinculoForm: FunctionComponent<Props> = ({}) => {
   const [successMessage, setSuccessMessage] = useState<string>();
   const [companyName, setCompanyName] = useState("");
   const [selectedCompanyId, setSelectedCompanyId] = useState("");
-  const vinculoFields = useVinculoFormFields();
+  const [ftFilter, setFtFilter] = useState("");
+  let vinculoFields = useVinculoFormFields();
+  const [ftField, setFtField] = useState<IFormField>(vinculoFields[0]);
+  const [filteredFtField, setFilteredFtField] = useState<IFormField>(ftField);
   const { userId, isAdmin } = useSelector((state: RootState) => state.auth);
   const { userCompanyId, adminSelectedCompanyId } = useSelector(
     (state: RootState) => state.companies
   );
 
-  const startState = () => setState(makeInitialFormState(vinculoFields));
+  const startState = () =>
+    setState(
+      //@ts-ignore
+      makeInitialFormState([{ label: "Ficha Técnica" }, ...vinculoFields])
+    );
 
   useEffect(() => {
     startState();
@@ -67,6 +75,10 @@ export const RegisterVinculoForm: FunctionComponent<Props> = ({}) => {
     setSuccessMessage(undefined);
   };
 
+  const onFtFilterChange = (event: any) => {
+    setFtFilter(event.target.value);
+  };
+
   const onSave = async () => {
     try {
       const newState = {
@@ -74,7 +86,7 @@ export const RegisterVinculoForm: FunctionComponent<Props> = ({}) => {
         "Motorista 2":
           state["Motorista 2"] === "Nenhum" ? "" : state["Motorista 2"],
       };
-      
+
       const vinculo = new Vinculo({ Transportadora: companyName, ...newState });
       const repo = new VinculoRepositoryDatabase();
 
@@ -106,6 +118,11 @@ export const RegisterVinculoForm: FunctionComponent<Props> = ({}) => {
     return info!.Transportadora;
   };
 
+  const withFilteredOptions = (field: IFormField) => {
+    const newOptions = field.options?.filter((o) => o.includes(ftFilter));
+    return { ...field, options: newOptions };
+  };
+
   useEffect(() => {
     const func = async () => {
       const id = getCompanyId();
@@ -119,8 +136,18 @@ export const RegisterVinculoForm: FunctionComponent<Props> = ({}) => {
     <Card sx={{ width: "400px", padding: "10px" }}>
       <CardHeader title="Cadastro de Vínculo" subheader="" />
       <Box sx={{ mb: "10px" }}>
+        <TextField
+          id="ftFilter"
+          label="Filtro de Ficha Técnica"
+          size="small"
+          value={ftFilter}
+          onChange={onFtFilterChange}
+        />
+      </Box>
+
+      <Box sx={{ mb: "10px" }}>
         <RenderFormField
-          field={vinculoFields[0]}
+          field={withFilteredOptions(vinculoFields[0])}
           onChange={onChange}
           value={state[vinculoFields[0].label]}
           helpertText={

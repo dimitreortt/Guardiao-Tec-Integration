@@ -97,7 +97,6 @@ export const RegisterItineraryForm: FunctionComponent<Props> = ({}) => {
       <CardHeader title="Cadastro de Plano de Viagem" subheader="" />
       <Box sx={{ mb: "10px" }}>
         <TextField
-          key={"latrka"}
           id="ltufilter"
           label="Filtro de LTU"
           size="small"
