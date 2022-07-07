@@ -11,7 +11,7 @@ export const vehicleFormFields = () => {
     { label: "Chassi", type: "Short Text", id: 7, index: 7 },
     { label: "Renavam", type: "Short Text", id: 8, index: 8 },
     { label: "Último Licenciamento", type: "Date", id: 10, index: 10 },
-    { label: "Capacidade(m3)", type: "Short Text", id: 6, index: 6 },
+    { label: "Capacidade(Kg)", type: "Number", id: 6, index: 6 },
     {
       label: "Categoria",
       type: "List Selection",

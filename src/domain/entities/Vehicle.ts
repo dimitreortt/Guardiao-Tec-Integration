@@ -5,7 +5,7 @@ type VehicleInput = {
   "Ano Fabricação": Date;
   "Ano Modelo": Date;
   Placa: string;
-  "Capacidade(m3)": string;
+  "Capacidade(Kg)": string;
   Chassi: string;
   Renavam: string;
   Categoria: string;
