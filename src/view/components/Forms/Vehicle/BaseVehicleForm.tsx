@@ -1,6 +1,6 @@
-import React, { FunctionComponent } from 'react';
-import { BaseForm } from '../Base/BaseForm';
-import { vehicleFormFields } from './vehicleFormFields';
+import React, { FunctionComponent } from "react";
+import { BaseForm } from "../Base/BaseForm";
+import { vehicleFormFields } from "./vehicleFormFields";
 
 type Props = {
   onSave: (state: any, setState?: any) => void;
@@ -17,7 +17,7 @@ export const BaseVehicleForm: FunctionComponent<Props> = ({
         onSave={onSave}
         initialState={initialState}
         formFields={vehicleFormFields()}
-        formTitle='Editar Vaículo'
+        formTitle="Editar Vaículo"
       />
     </div>
   );

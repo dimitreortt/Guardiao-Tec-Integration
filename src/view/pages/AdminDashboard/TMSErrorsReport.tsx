@@ -30,6 +30,7 @@ export const TMSErrorsReport: FunctionComponent<Props> = ({ reports }) => {
     "Linha",
     "Placa",
     "Reultado",
+    "Mensagem",
   ];
 
   const makeTableRows = () => {
@@ -49,6 +50,7 @@ export const TMSErrorsReport: FunctionComponent<Props> = ({ reports }) => {
         report.linha,
         report.placa,
         report.resultado,
+        report.mensagem ? report.mensagem : "",
       ];
       rows.push(row);
     }

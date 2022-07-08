@@ -8,6 +8,7 @@ export type PlanningReportValues = {
   resultado: "Sucesso" | "Erro";
   transpId: string;
   transportadora: string;
+  mensagem?: string;
 };
 
 export type ReportValues = {
