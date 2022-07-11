@@ -1,5 +1,6 @@
 import moment from "moment";
 import React, { FunctionComponent } from "react";
+import { localeDateStrintWithouSeconds } from "../../../application/service/localeDateStringWithouSeconds";
 import {
   PlanningReportValues,
   ReportValues,
@@ -43,10 +44,12 @@ export const TMSErrorsReport: FunctionComponent<Props> = ({ reports }) => {
     for (const report of errorsReports) {
       //   const transpName = await getTranspName(vehicle.transpId);
       const row = [
-        moment(report.aberturaLinha).format("DD/MM/yyyy hh:mm:ss"),
+        // moment(report.aberturaLinha).format("DD/MM/yyyy hh:mm"),
+        localeDateStrintWithouSeconds(report.aberturaLinha),
         report.codigoTMS.toString(),
         report.ft,
-        moment(report.horarioEnvio).format("DD/MM/yyyy hh:mm:ss"),
+        // moment(report.horarioEnvio).format("DD/MM/yyyy hh:mm"),
+        localeDateStrintWithouSeconds(report.horarioEnvio),
         report.linha,
         report.placa,
         report.resultado,
