@@ -65,7 +65,7 @@ export const ItineraryPage: FunctionComponent<Props> = ({}) => {
       );
 
       rows.push([
-        itinerary.values["LTU Correspondente"],
+        // itinerary.values["LTU Correspondente"],
         itinerary.values.Sequencia,
         itinerary.values.CTO,
         itinerary.values["Ponto De Parada"],
@@ -85,7 +85,7 @@ export const ItineraryPage: FunctionComponent<Props> = ({}) => {
   };
 
   const itinerariesTableHead = [
-    "LTU Correspondente",
+    // "LTU Correspondente",
     "Sequencia",
     "CTO",
     "Ponto De Parada",
