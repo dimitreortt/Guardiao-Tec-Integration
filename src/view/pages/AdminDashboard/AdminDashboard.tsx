@@ -62,7 +62,7 @@ export const AdminDashboard: FunctionComponent<Props> = ({}) => {
                 </DataBox>
               </Grid>
             )}
-            <Grid item xs={12} md={6}>
+            {/* <Grid item xs={12} md={6}>
               <DataBox title="CNHs">
                 <Typography textAlign="center" gutterBottom>
                   CNHs com vencimento em <b>{getCurrentMonthString()}</b>
@@ -76,10 +76,10 @@ export const AdminDashboard: FunctionComponent<Props> = ({}) => {
                   Veículos com vencimento do licenciamento em{" "}
                   <b>{getCurrentMonthString()}</b>
                 </Typography>
-                {/* <DriversFilteredByCNH /> */}
                 <DashboardLicensesTable />
               </DataBox>
-            </Grid>
+            </Grid> */}
+            {/* <DriversFilteredByCNH /> */}
           </Grid>
         </Box>
       </Box>
