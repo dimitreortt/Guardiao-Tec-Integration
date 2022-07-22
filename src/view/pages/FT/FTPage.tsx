@@ -62,8 +62,8 @@ export const FTPage: FunctionComponent<Props> = ({}) => {
     let rows: (string | JSX.Element)[][] = [];
     for (const ft of filteredFTs) {
       rows.push([
-        ft.values["Numero de Contrato"],
-        ft.values["Código"],
+        // ft.values["Numero de Contrato"],
+        // ft.values["Código"],
         ft.values["Origem/Destino"],
         ft.values["Nº da FT"],
         ft.values["Nº da Linha"],
@@ -77,8 +77,8 @@ export const FTPage: FunctionComponent<Props> = ({}) => {
   };
 
   const ftsTableHead = [
-    "Numero de Contrato",
-    "Código",
+    // "Numero de Contrato",
+    // "Código",
     "Origem/Destino",
     "Nº da FT",
     "Nº da Linha",

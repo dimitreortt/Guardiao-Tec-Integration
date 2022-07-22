@@ -31,6 +31,14 @@ export const TableRowOptions: FunctionComponent<Props> = ({
   const [inDeleteField, setInDeleteField] = useState(false);
   const { isAdmin, user } = useSelector((state: RootState) => state.auth);
 
+  const isCompanyAdminOrMasterAdmin = () => {
+    return (
+      user?.accessType === "Administrador" ||
+      // user?.accessType === "Editor" ||
+      isAdmin
+    );
+  };
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -51,7 +59,9 @@ export const TableRowOptions: FunctionComponent<Props> = ({
     onRowCommand("delete", row);
   };
 
-  return (
+  return !isCompanyAdminOrMasterAdmin() ? (
+    <></>
+  ) : (
     <div>
       <IconButton aria-describedby={id} color="secondary" onClick={handleClick}>
         <MoreHorizIcon />
@@ -76,17 +86,19 @@ export const TableRowOptions: FunctionComponent<Props> = ({
             </ListSubheader>
           }
         >
-          <ListItemButton onClick={handleEdit}>
-            <EditIcon></EditIcon>
-            <ListItemText primary="Editar" />
-          </ListItemButton>
           {(user?.accessType === "Administrador" ||
-            user?.accessType === "Editor" ||
+            // user?.accessType === "Editor" ||
             isAdmin) && (
-            <ListItemButton onClick={handleDelete}>
-              <DeleteIcon></DeleteIcon>
-              <ListItemText primary="Deletar" />
-            </ListItemButton>
+            <>
+              <ListItemButton onClick={handleEdit}>
+                <EditIcon></EditIcon>
+                <ListItemText primary="Editar" />
+              </ListItemButton>
+              <ListItemButton onClick={handleDelete}>
+                <DeleteIcon></DeleteIcon>
+                <ListItemText primary="Deletar" />
+              </ListItemButton>
+            </>
           )}
         </List>
         {/* <Typography sx={{ p: 2 }}>The content of the Popover.</Typography> */}
