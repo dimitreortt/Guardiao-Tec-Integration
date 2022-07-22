@@ -52,7 +52,7 @@ export const VehiclePage: FunctionComponent<Props> = ({}) => {
         vehicle.values.Placa,
         vehicle.values.Chassi,
         vehicle.values.Renavam,
-        moment(vehicle.values["Último Licenciamento"]).format("MM/YYYY"),
+        // moment(vehicle.values["Último Licenciamento"]).format("MM/YYYY"),
         vehicle.values["Capacidade(Kg)"].toString(),
         vehicle.values.Categoria,
       ]);
@@ -69,7 +69,7 @@ export const VehiclePage: FunctionComponent<Props> = ({}) => {
     "Placa",
     "Chassi",
     "Renavam",
-    "Último Licenciamento",
+    // "Último Licenciamento",
     "Capacidade(Kg)",
     "Categoria",
     "",
