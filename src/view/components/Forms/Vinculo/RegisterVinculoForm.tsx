@@ -37,6 +37,7 @@ export const RegisterVinculoForm: FunctionComponent<Props> = ({}) => {
   const [successMessage, setSuccessMessage] = useState<string>();
   const [companyName, setCompanyName] = useState("");
   const [ftFilter, setFtFilter] = useState("");
+  const [vehicleFilter, setVehicleFilter] = useState("");
   let vinculoFields = useVinculoFormFields();
   const { userCompanyId, adminSelectedCompanyId } = useSelector(
     (state: RootState) => state.companies
@@ -63,6 +64,10 @@ export const RegisterVinculoForm: FunctionComponent<Props> = ({}) => {
 
   const onFtFilterChange = (event: any) => {
     setFtFilter(event.target.value);
+  };
+
+  const onVehicleFilterChange = (event: any) => {
+    setVehicleFilter(event.target.value);
   };
 
   const onSave = async () => {
@@ -104,8 +109,8 @@ export const RegisterVinculoForm: FunctionComponent<Props> = ({}) => {
     return info!.Transportadora;
   };
 
-  const withFilteredOptions = (field: IFormField) => {
-    const newOptions = field.options?.filter((o) => o.includes(ftFilter));
+  const withFilteredOptions = (field: IFormField, filter: string) => {
+    const newOptions = field.options?.filter((o) => o.includes(filter));
     return { ...field, options: newOptions };
   };
 
@@ -121,6 +126,7 @@ export const RegisterVinculoForm: FunctionComponent<Props> = ({}) => {
   return (
     <Card sx={{ width: "400px", padding: "10px" }}>
       <CardHeader title="Cadastro de Vínculo" subheader="" />
+      {/* filtro e field de ft */}
       <Box sx={{ mb: "10px" }}>
         <TextField
           id="ftFilter"
@@ -130,10 +136,9 @@ export const RegisterVinculoForm: FunctionComponent<Props> = ({}) => {
           onChange={onFtFilterChange}
         />
       </Box>
-
       <Box sx={{ mb: "10px" }}>
         <RenderFormField
-          field={withFilteredOptions(vinculoFields[0])}
+          field={withFilteredOptions(vinculoFields[0], ftFilter)}
           onChange={onChange}
           value={state[vinculoFields[0].label]}
           helpertText={
@@ -141,6 +146,8 @@ export const RegisterVinculoForm: FunctionComponent<Props> = ({}) => {
           }
         />
       </Box>
+
+      {/* field transportadora que é disabled */}
       <Box sx={{ mb: "10px" }}>
         <TextField
           id="transportadora"
@@ -151,7 +158,29 @@ export const RegisterVinculoForm: FunctionComponent<Props> = ({}) => {
           fullWidth
         />
       </Box>
-      {vinculoFields.slice(1).map((field: IFormField) => {
+
+      {/* filtro e field de veículo */}
+      <Box sx={{ mb: "10px" }}>
+        <TextField
+          id="vehicleFilter"
+          label="Filtro de Veículo"
+          size="small"
+          value={vehicleFilter}
+          onChange={onVehicleFilterChange}
+        />
+      </Box>
+      <Box sx={{ mb: "10px" }}>
+        <RenderFormField
+          field={withFilteredOptions(vinculoFields[1], vehicleFilter)}
+          onChange={onChange}
+          value={state[vinculoFields[1].label]}
+          helpertText={
+            !state[vinculoFields[1].label] ? vinculoFields[1].helpertText : ""
+          }
+        />
+      </Box>
+
+      {vinculoFields.slice(2).map((field: IFormField) => {
         return (
           <Box sx={{ mb: "10px" }} key={field.id}>
             <RenderFormField
