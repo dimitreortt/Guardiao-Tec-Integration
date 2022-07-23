@@ -38,6 +38,7 @@ export const RegisterVinculoForm: FunctionComponent<Props> = ({}) => {
   const [companyName, setCompanyName] = useState("");
   const [ftFilter, setFtFilter] = useState("");
   const [vehicleFilter, setVehicleFilter] = useState("");
+  const [driverFilter, setDriverFilter] = useState("");
   let vinculoFields = useVinculoFormFields();
   const { userCompanyId, adminSelectedCompanyId } = useSelector(
     (state: RootState) => state.companies
@@ -68,6 +69,10 @@ export const RegisterVinculoForm: FunctionComponent<Props> = ({}) => {
 
   const onVehicleFilterChange = (event: any) => {
     setVehicleFilter(event.target.value);
+  };
+
+  const onDriverFilterChange = (event: any) => {
+    setDriverFilter(event.target.value);
   };
 
   const onSave = async () => {
@@ -176,6 +181,27 @@ export const RegisterVinculoForm: FunctionComponent<Props> = ({}) => {
           value={state[vinculoFields[1].label]}
           helpertText={
             !state[vinculoFields[1].label] ? vinculoFields[1].helpertText : ""
+          }
+        />
+      </Box>
+
+      {/* filtro e field de motorista */}
+      <Box sx={{ mb: "10px" }}>
+        <TextField
+          id="driverFilter"
+          label="Filtro de Motorista"
+          size="small"
+          value={driverFilter}
+          onChange={onDriverFilterChange}
+        />
+      </Box>
+      <Box sx={{ mb: "10px" }}>
+        <RenderFormField
+          field={withFilteredOptions(vinculoFields[2], driverFilter)}
+          onChange={onChange}
+          value={state[vinculoFields[2].label]}
+          helpertText={
+            !state[vinculoFields[2].label] ? vinculoFields[2].helpertText : ""
           }
         />
       </Box>
