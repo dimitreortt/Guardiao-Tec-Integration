@@ -39,6 +39,8 @@ export const RegisterVinculoForm: FunctionComponent<Props> = ({}) => {
   const [ftFilter, setFtFilter] = useState("");
   const [vehicleFilter, setVehicleFilter] = useState("");
   const [driverFilter, setDriverFilter] = useState("");
+  const [driver2Filter, setDriver2Filter] = useState("");
+  const [itineraryFilter, setItineraryFilter] = useState("");
   let vinculoFields = useVinculoFormFields();
   const { userCompanyId, adminSelectedCompanyId } = useSelector(
     (state: RootState) => state.companies
@@ -73,6 +75,14 @@ export const RegisterVinculoForm: FunctionComponent<Props> = ({}) => {
 
   const onDriverFilterChange = (event: any) => {
     setDriverFilter(event.target.value);
+  };
+
+  const onDriver2FilterChange = (event: any) => {
+    setDriver2Filter(event.target.value);
+  };
+
+  const onItineraryFilterChange = (event: any) => {
+    setItineraryFilter(event.target.value);
   };
 
   const onSave = async () => {
@@ -185,7 +195,7 @@ export const RegisterVinculoForm: FunctionComponent<Props> = ({}) => {
         />
       </Box>
 
-      {/* filtro e field de motorista */}
+      {/* filtro e field de motorista*/}
       <Box sx={{ mb: "10px" }}>
         <TextField
           id="driverFilter"
@@ -206,7 +216,49 @@ export const RegisterVinculoForm: FunctionComponent<Props> = ({}) => {
         />
       </Box>
 
-      {vinculoFields.slice(2).map((field: IFormField) => {
+      {/* filtro e field de motorista 2 */}
+      <Box sx={{ mb: "10px" }}>
+        <TextField
+          id="driver2Filter"
+          label="Filtro de Motorista 2"
+          size="small"
+          value={driver2Filter}
+          onChange={onDriver2FilterChange}
+        />
+      </Box>
+      <Box sx={{ mb: "10px" }}>
+        <RenderFormField
+          field={withFilteredOptions(vinculoFields[3], driver2Filter)}
+          onChange={onChange}
+          value={state[vinculoFields[3].label]}
+          helpertText={
+            !state[vinculoFields[3].label] ? vinculoFields[3].helpertText : ""
+          }
+        />
+      </Box>
+
+      {/* filtro e field de plano de viagem */}
+      <Box sx={{ mb: "10px" }}>
+        <TextField
+          id="itineraryFilter"
+          label="Filtro de Plano de Viagem"
+          size="small"
+          value={itineraryFilter}
+          onChange={onItineraryFilterChange}
+        />
+      </Box>
+      <Box sx={{ mb: "10px" }}>
+        <RenderFormField
+          field={withFilteredOptions(vinculoFields[4], itineraryFilter)}
+          onChange={onChange}
+          value={state[vinculoFields[4].label]}
+          helpertText={
+            !state[vinculoFields[4].label] ? vinculoFields[4].helpertText : ""
+          }
+        />
+      </Box>
+      {/* 
+      {vinculoFields.slice(4).map((field: IFormField) => {
         return (
           <Box sx={{ mb: "10px" }} key={field.id}>
             <RenderFormField
@@ -217,7 +269,7 @@ export const RegisterVinculoForm: FunctionComponent<Props> = ({}) => {
             />
           </Box>
         );
-      })}
+      })} */}
 
       <CardActions>
         <Button
