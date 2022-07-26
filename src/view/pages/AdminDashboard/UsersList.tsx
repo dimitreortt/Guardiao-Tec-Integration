@@ -9,7 +9,7 @@ import {
   TableRow,
   Tooltip,
 } from "@mui/material";
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import uuid from "react-uuid";
 import { RootState } from "../../../application/store/configureStore";
@@ -20,6 +20,7 @@ import { UserRepositoryDatabase } from "../../../infra/repository/UserRepository
 import { dispatchUserBlockedStatus } from "../../../application/service/dispatchUserBlockedStatus";
 import { deleteUser } from "../../../application/service/deleteUser";
 import { AlertSnackbar } from "../../components/Common/AlertSnackbar";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 type Props = {};
 
@@ -27,13 +28,23 @@ export const UsersList: FunctionComponent<Props> = ({}) => {
   const users = useSelector((state: RootState) => state.users.users);
   const [error, setError] = useState<string>();
   const [successMessage, setSuccessMessage] = useState<string>();
+  const [shouldShowPasswordState, setShouldSetshowPasswordState] =
+    useState<any>({});
 
-  const tableHead = ["E-mail", "Tipo de acesso", "Bloqueado", "", ""];
+  useEffect(() => {
+    if (!users) return;
+    let newState: any = {};
+    for (let i = 0; i < users.length; i++) {
+      newState[i] = false;
+    }
+  }, [users]);
+
+  const tableHead = ["E-mail", "Senha", "Tipo de acesso", "Bloqueado", "", ""];
   let tableRows: (string | boolean)[][] = [];
 
   if (users) {
     tableRows = users.map((u) => {
-      return [u.email, u.accessType, u.blocked, "oi"];
+      return [u.email, u.password, u.accessType, u.blocked, "oi"];
     });
   }
 
@@ -64,6 +75,17 @@ export const UsersList: FunctionComponent<Props> = ({}) => {
     setSuccessMessage(undefined);
   };
 
+  const shouldShowPassword = (index: number) => {
+    return shouldShowPasswordState[index];
+  };
+
+  const setShouldShow = (index: number, should: boolean) => {
+    setShouldSetshowPasswordState((prev: any) => ({
+      ...prev,
+      [index]: should,
+    }));
+  };
+
   return (
     <React.Fragment>
       <TableContainer component={Box} sx={{}}>
@@ -87,18 +109,33 @@ export const UsersList: FunctionComponent<Props> = ({}) => {
                   {row[0]}
                 </TableCell>
                 <TableCell align="center" key={uuid()}>
-                  {row[1]}
+                  {shouldShowPassword(index) ? (
+                    <div onClick={() => setShouldShow(index, false)}>
+                      {row[1]}
+                    </div>
+                  ) : (
+                    <IconButton
+                      sx={{ m: 0, p: 0 }}
+                      aria-label="none"
+                      onClick={() => setShouldShow(index, true)}
+                    >
+                      <VisibilityIcon />
+                    </IconButton>
+                  )}
                 </TableCell>
                 <TableCell align="center" key={uuid()}>
-                  {row[2] ? "Sim" : "Não"}
+                  {row[2]}
                 </TableCell>
                 <TableCell align="center" key={uuid()}>
-                  <Tooltip title={row[2] ? "Desbloquear" : "Bloquear"}>
+                  {row[3] ? "Sim" : "Não"}
+                </TableCell>
+                <TableCell align="center" key={uuid()}>
+                  <Tooltip title={row[3] ? "Desbloquear" : "Bloquear"}>
                     <IconButton
                       onClick={() => handleLock(row)}
                       sx={{ p: 0, mx: 0, my: 0, display: "block" }}
                     >
-                      {row[2] ? <LockOpenIcon /> : <BlockIcon />}
+                      {row[3] ? <LockOpenIcon /> : <BlockIcon />}
                     </IconButton>
                   </Tooltip>
                 </TableCell>

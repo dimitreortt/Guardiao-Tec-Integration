@@ -3,7 +3,7 @@ export type UserValues = {
   companyId: string;
   email: string;
   blocked: boolean;
-  //   password: string;
+  password: string;
   Id?: string;
 };
 
