@@ -52,7 +52,9 @@ export const TMSReport: FunctionComponent<Props> = ({ periodFilter }) => {
     if (periodFilter === "semana") filtered = filterByWeek(filtered);
     if (periodFilter === "geral") filtered = filtered;
 
-    setFiltered(filtered.sort(sortByDate));
+    console.log("to aqui");
+    // setFiltered(filtered.sort(sortByDate));
+    setFiltered(filtered);
   }, [reports, selectedCompanyId]);
 
   const expand = (panel: "error" | "success") => {

@@ -11,7 +11,11 @@ import {
   getDoc,
   onSnapshot,
 } from "firebase/firestore";
-import { getCurrentFormattedDate } from "../../application/service/getCurrentFormattedDate";
+import {
+  getCurrentFormattedDate,
+  getFormattedDateWithOffset,
+} from "../../application/service/getCurrentFormattedDate";
+import { setReportsType } from "../../application/store/features/tms/tmsSlice";
 import {
   PlanningReportValues,
   Report,
@@ -39,21 +43,24 @@ export class ReportsRepositoryDatabase {
   }
 
   listenReports(setReports: any) {
-    const q = collection(
-      this.db,
-      `tmsPlanningReports/${getCurrentFormattedDate()}/reports`
-    );
+    for (let i = 0; i < 30; i++) {
+      const q = collection(
+        this.db,
+        // `tmsPlanningReports/${getCurrentFormattedDate()}/reports`
+        `tmsPlanningReports/${getFormattedDateWithOffset(-i)}/reports`
+      );
 
-    onSnapshot(q, (querySnapshot) => {
-      const reports: PlanningReportValues[] = [];
-      querySnapshot.forEach((doc) => {
-        const data: any = doc.data();
-        // data.createdAt = data.createdAt.toDate();
-        data.horarioEnvio = data.horarioEnvio.toDate();
-        data.aberturaLinha = data.aberturaLinha.toDate();
-        reports.push(data);
+      onSnapshot(q, (querySnapshot) => {
+        const reports: PlanningReportValues[] = [];
+        querySnapshot.forEach((doc) => {
+          const data: any = doc.data();
+          // data.createdAt = data.createdAt.toDate();
+          data.horarioEnvio = data.horarioEnvio.toDate();
+          data.aberturaLinha = data.aberturaLinha.toDate();
+          reports.push(data);
+        });
+        setReports(reports);
       });
-      setReports(reports);
-    });
+    }
   }
 }
