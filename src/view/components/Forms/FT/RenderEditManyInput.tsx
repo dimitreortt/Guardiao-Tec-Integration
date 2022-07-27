@@ -53,6 +53,16 @@ export const RenderEditManyInput: FunctionComponent<Props> = ({
           options={ffs[6].options}
         />
       );
+    } else if (targetField === "Origem/Destino") {
+      const value = currentValue ? currentValue : ft.values["Origem/Destino"];
+      onChange("", value);
+      return (
+        <ShortTextFormField
+          label="Origem/Destino"
+          onChange={onChange}
+          value={value}
+        />
+      );
     }
   };
 
