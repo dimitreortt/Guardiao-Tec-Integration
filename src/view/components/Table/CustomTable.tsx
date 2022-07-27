@@ -34,6 +34,7 @@ type Props = {
   tableRows: string[][];
   onRowCommand: (command: RowCommand, row: string[]) => void;
   noRowOptions?: boolean;
+  hasEditManyOption?: boolean;
 };
 
 export const CustomTable: FunctionComponent<Props> = ({
@@ -41,6 +42,7 @@ export const CustomTable: FunctionComponent<Props> = ({
   tableRows,
   onRowCommand,
   noRowOptions,
+  hasEditManyOption,
 }) => {
   return (
     <TableContainer component={Paper} sx={{ maxHeight: "100%" }}>
@@ -68,6 +70,7 @@ export const CustomTable: FunctionComponent<Props> = ({
               key={index}
               onRowCommand={onRowCommand}
               noRowOptions={noRowOptions}
+              hasEditManyOption={hasEditManyOption}
             />
             // <TableRow
             //   key={index}

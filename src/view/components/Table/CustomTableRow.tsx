@@ -8,12 +8,14 @@ type Props = {
   row: string[];
   onRowCommand: (command: RowCommand, row: string[]) => void;
   noRowOptions?: boolean;
+  hasEditManyOption?: boolean;
 };
 
 export const CustomTableRow: FunctionComponent<Props> = ({
   row,
   onRowCommand,
   noRowOptions,
+  hasEditManyOption,
 }) => {
   return (
     <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
@@ -26,7 +28,11 @@ export const CustomTableRow: FunctionComponent<Props> = ({
       })}
       {!noRowOptions && (
         <TableCell align="center" sx={{ width: "10px" }}>
-          <TableRowOptions onRowCommand={onRowCommand} row={row} />
+          <TableRowOptions
+            onRowCommand={onRowCommand}
+            row={row}
+            hasEditManyOption={hasEditManyOption}
+          />
         </TableCell>
       )}
     </TableRow>

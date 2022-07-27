@@ -18,11 +18,13 @@ export type RowCommand = "edit" | "editMany" | "delete";
 type Props = {
   onRowCommand: (command: RowCommand, row: string[]) => void;
   row: string[];
+  hasEditManyOption?: boolean;
 };
 
 export const TableRowOptions: FunctionComponent<Props> = ({
   onRowCommand,
   row,
+  hasEditManyOption,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
@@ -101,10 +103,12 @@ export const TableRowOptions: FunctionComponent<Props> = ({
                 <EditIcon></EditIcon>
                 <ListItemText primary="Editar" />
               </ListItemButton>
-              <ListItemButton onClick={handleEditMany}>
-                <EditIcon></EditIcon>
-                <ListItemText primary="Editar cadastro em massa" />
-              </ListItemButton>
+              {hasEditManyOption && (
+                <ListItemButton onClick={handleEditMany}>
+                  <EditIcon></EditIcon>
+                  <ListItemText primary="Editar cadastro em massa" />
+                </ListItemButton>
+              )}
               <ListItemButton onClick={handleDelete}>
                 <DeleteIcon></DeleteIcon>
                 <ListItemText primary="Deletar" />

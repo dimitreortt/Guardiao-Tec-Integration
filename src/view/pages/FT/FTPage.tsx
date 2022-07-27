@@ -144,6 +144,7 @@ export const FTPage: FunctionComponent<Props> = ({}) => {
         //@ts-ignore
         tableRows={ftsTableRows}
         onRowCommand={onRowCommand}
+        hasEditManyOption={true}
       />
 
       {inEdit && (
