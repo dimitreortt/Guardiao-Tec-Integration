@@ -19,6 +19,7 @@ import { selectCurrentRelatedCompanyId } from "../../../infra/services/selectCur
 import { BaseStyledPage } from "../Common/BaseStyledPage";
 import { RegisterButton } from "../Common/RegisterButton";
 import { DownloadFileDialog } from "../Common/DownloadFileDialog";
+import { EditManyFTForm } from "../../components/Forms/FT/EditManyFTForm";
 
 type Props = {};
 
@@ -26,6 +27,7 @@ export const FTPage: FunctionComponent<Props> = ({}) => {
   const [fts, setFTs] = useState<FT[]>([]);
   const [filteredFTs, setFilteredFTS] = useState<FT[]>([]);
   const [inEdit, setInEdit] = useState(false);
+  const [inEditMany, setInEditMany] = useState(false);
   const [inDelete, setInDelete] = useState(false);
   const [targetCommandFT, setTargetCommandFT] = useState<FT>();
   const { userId, isAdmin } = useSelector((state: RootState) => state.auth);
@@ -91,15 +93,22 @@ export const FTPage: FunctionComponent<Props> = ({}) => {
   const ftsTableRows = makeTableRows();
 
   const onRowCommand = (command: RowCommand, row: string[]) => {
-    const ft = fts.find((ft) => ft.values["Nº da FT"] === row[3]);
+    console.log(command);
+    const ft = fts.find((ft) => ft.values["Nº da FT"] === row[1]);
     if (!ft) return;
     setTargetCommandFT(ft);
     if (command === "edit") setInEdit(true);
+    if (command === "editMany") setInEditMany(true);
     if (command === "delete") setInDelete(true);
   };
 
   const onEditClose = () => {
     setInEdit(false);
+    fetchFTs(setFTs);
+  };
+
+  const onEditManyClose = () => {
+    setInEditMany(false);
     fetchFTs(setFTs);
   };
 
@@ -117,6 +126,8 @@ export const FTPage: FunctionComponent<Props> = ({}) => {
       );
     await repo.deleteFT(companyId, ftId);
   };
+
+  console.log(inEditMany);
 
   return (
     <BaseStyledPage>
@@ -139,6 +150,14 @@ export const FTPage: FunctionComponent<Props> = ({}) => {
         <EditFTForm
           open={inEdit}
           onClose={onEditClose}
+          ft={targetCommandFT!}
+          ftId={targetCommandFT!.values.Id!}
+        />
+      )}
+      {inEditMany && (
+        <EditManyFTForm
+          open={inEditMany}
+          onClose={onEditManyClose}
           ft={targetCommandFT!}
           ftId={targetCommandFT!.values.Id!}
         />

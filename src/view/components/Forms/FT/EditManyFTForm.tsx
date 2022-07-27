@@ -3,6 +3,7 @@ import { AlertSnackbar } from "../../Common/AlertSnackbar";
 import { Box, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { FT } from "../../../../domain/entities/FT";
 import { EditManySelect } from "./EditManySelect";
+import { RenderEditManyInput } from "./RenderEditManyInput";
 
 type Props = {
   open: boolean;
@@ -38,8 +39,6 @@ export const EditManyFTForm: FunctionComponent<Props> = ({
 
   const editableFields = makeEditableFields(ft);
 
-  console.log(ft);
-
   const onAlertClose = () => {
     setError(undefined);
     setSuccessMessage(undefined);
@@ -47,9 +46,14 @@ export const EditManyFTForm: FunctionComponent<Props> = ({
 
   const onFieldChange = (chosen: string) => {
     setTargetField(chosen);
+    setNewValue("");
   };
 
-  const onInputChange = (newValue: any) => {};
+  const onInputChange = (newValue: any) => {
+    setNewValue(newValue);
+  };
+
+  console.log(newValue);
 
   return (
     <Dialog open={open} onClose={onClose} aria-labelledby={"EditFTForm"}>
@@ -59,15 +63,17 @@ export const EditManyFTForm: FunctionComponent<Props> = ({
         campo selecionado. Esta operação não pode ser desfeita
         <Box sx={{ mt: 2 }}></Box>
         <EditManySelect
-          label={"Nome do Campo"}
+          label={targetField || "Nome do Campo"}
           options={editableFields}
           value=""
           onChange={onFieldChange}
         />
+        <Box sx={{ mt: 2 }}></Box>
         <RenderEditManyInput
           targetField={targetField}
           ft={ft}
           onInputChange={onInputChange}
+          currentValue={newValue}
         />
       </DialogContent>
       {/* <BaseFTForm

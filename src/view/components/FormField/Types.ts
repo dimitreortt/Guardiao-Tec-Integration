@@ -1,8 +1,8 @@
-import { FormFieldValue } from './../../../domain/entities/FormField';
+import { FormFieldValue } from "./../../../domain/entities/FormField";
 
 export type FormFieldStrategyProps = {
   label: string;
-  options: string[] | undefined;
+  options?: string[];
   onChange: (label: string, value: FormFieldValue) => void;
   value?: any;
   helperText?: string;

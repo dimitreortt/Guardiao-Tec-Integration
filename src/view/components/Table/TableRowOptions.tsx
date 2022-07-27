@@ -13,7 +13,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../application/store/configureStore";
 
-export type RowCommand = "edit" | "delete";
+export type RowCommand = "edit" | "editMany" | "delete";
 
 type Props = {
   onRowCommand: (command: RowCommand, row: string[]) => void;
@@ -55,6 +55,11 @@ export const TableRowOptions: FunctionComponent<Props> = ({
     onRowCommand("edit", row);
   };
 
+  const handleEditMany = () => {
+    // setInEditField((prev) => !prev);
+    onRowCommand("editMany", row);
+  };
+
   const handleDelete = () => {
     onRowCommand("delete", row);
   };
@@ -67,6 +72,8 @@ export const TableRowOptions: FunctionComponent<Props> = ({
         <MoreHorizIcon />
       </IconButton>
       <Popover
+        sx={{ width: 300 }}
+        PaperProps={{ style: { width: 200 } }}
         id={id}
         open={open}
         anchorEl={anchorEl}
@@ -93,6 +100,10 @@ export const TableRowOptions: FunctionComponent<Props> = ({
               <ListItemButton onClick={handleEdit}>
                 <EditIcon></EditIcon>
                 <ListItemText primary="Editar" />
+              </ListItemButton>
+              <ListItemButton onClick={handleEditMany}>
+                <EditIcon></EditIcon>
+                <ListItemText primary="Editar cadastro em massa" />
               </ListItemButton>
               <ListItemButton onClick={handleDelete}>
                 <DeleteIcon></DeleteIcon>
