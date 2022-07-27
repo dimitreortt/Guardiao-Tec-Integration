@@ -1,7 +1,9 @@
 import React, { FunctionComponent } from "react";
 import { FT } from "../../../../domain/entities/FT";
+import { CheckboxFormField } from "../../FormField/CheckboxFormField";
 import { DateFormField } from "../../FormField/DateFormField";
 import { ShortTextFormField } from "../../FormField/ShortTextFormField";
+import { ftFormFields } from "./ftFormFields";
 
 type Props = {
   targetField: string;
@@ -19,6 +21,7 @@ export const RenderEditManyInput: FunctionComponent<Props> = ({
   console.log(targetField);
 
   const onChange = (label: string, newValue: any) => onInputChange(newValue);
+  const ffs = ftFormFields();
 
   const findComp = () => {
     if (targetField === "Sentido") {
@@ -37,6 +40,17 @@ export const RenderEditManyInput: FunctionComponent<Props> = ({
           label="Data de Vigencia Inicial"
           onChange={onChange}
           value={value}
+        />
+      );
+    } else if (targetField === "Frequência") {
+      const value = currentValue ? currentValue : ft.values["Frequência"];
+      onChange("", value);
+      return (
+        <CheckboxFormField
+          label="Frequência"
+          onChange={onChange}
+          value={value}
+          options={ffs[6].options}
         />
       );
     }
