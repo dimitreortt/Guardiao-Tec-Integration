@@ -24,7 +24,7 @@ yarn-error.log*
 src/firebase/firebaseConfig.ts
 src/infra/repository/serverUrl.ts
 
-letter.*
+correios_ws.txt
 b.js
 a.js
 c.txt
