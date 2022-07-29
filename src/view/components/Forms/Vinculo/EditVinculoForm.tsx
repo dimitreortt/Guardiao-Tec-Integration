@@ -80,7 +80,8 @@ export const EditVinculoForm: FunctionComponent<Props> = ({
   const onSave = async (state: any, setState: any) => {
     try {
       for (const key in state)
-        if (!state[key]) throw new Error(`Campo ${key} inválido!`);
+        if (key !== "Motorista 2" && !state[key])
+          throw new Error(`Campo ${key} inválido!`);
 
       let newState = {
         Transportadora: companyName,

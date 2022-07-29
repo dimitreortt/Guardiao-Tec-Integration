@@ -23,3 +23,9 @@ yarn-debug.log*
 yarn-error.log*
 src/firebase/firebaseConfig.ts
 src/infra/repository/serverUrl.ts
+
+letter.*
+b.js
+a.js
+c.txt
+config.zip
